@@ -1,4 +1,3 @@
-
 from fastapi import FastAPI, UploadFile, File
 from fastapi.middleware.cors import CORSMiddleware
 import uvicorn
@@ -25,21 +24,11 @@ app.add_middleware(
 @app.post("/analyze")
 async def analyze(file: UploadFile = File(...)):
     try:
-        contents = await file.read()
-        with tempfile.NamedTemporaryFile(delete=False, suffix=".wav") as tmp:
-            tmp.write(contents)
-            tmp_path = tmp.name
-
-        y, sr = librosa.load(tmp_path, sr=None)
-        duration = librosa.get_duration(y=y, sr=sr)
-        energy = np.mean(y ** 2)
-
-        return {
-            "filename": file.filename,
-            "sample_rate": sr,
-            "duration_seconds": round(duration, 2),
-            "energy": round(float(energy), 6),
-        }
+        # ✅ Usa tu función avanzada desde utils/audio_processing
+        from utils.audio_processing import analyze_audio
+        result = await analyze_audio(file)
+        result["filename"] = file.filename
+        return result
 
     except Exception as e:
         import traceback
