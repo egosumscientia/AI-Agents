@@ -23,7 +23,7 @@ export default function AudioUploader({ onResult }: any) {
 
   return (
     <div className="mb-6 flex flex-col items-center">
-      <input type="file" accept="audio/*" onChange={handleFile} />
+      <input type="file" accept="audio/*" onChange={handleFile} title="Seleccionar archivo de audio" aria-label="Seleccionar archivo de audio"/>
       <button
         disabled={loading}
         className="mt-3 bg-emerald-500 px-4 py-2 rounded hover:bg-emerald-600"
