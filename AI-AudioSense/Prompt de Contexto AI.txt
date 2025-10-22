@@ -1,0 +1,30 @@
+🧠 Prompt de Contexto — AI-AudioSense (Frontend + Backend integrados) Contexto general: Estoy trabajando en una aplicación llamada AI-AudioSense, un sistema de inteligencia artificial para análisis acústico industrial. Su propósito es detectar patrones anómalos en sonidos de motores, compresores o líneas de producción usando FastAPI (backend) y Next.js con React (frontend). ⚙️ Arquitectura del proyecto Backend: FastAPI (Python) Endpoint principal: /analyze Analiza archivos .wav con librosa y numpy. Calcula: RMS SNR Flatness espectral Crest Factor Frecuencia dominante Energía por banda [0–500, 500–1000, 1000–4000, 4000–8000, 8000–12000 Hz] Devuelve un JSON con: { "rms_db": 70.4, "dominant_freq_hz": 9000, "confidence_percent": 85, "status": "Anómalo", "mensaje": "⚠️ Vibración anómala detectada", "snr_db": 0.0, "flatness": 0.0, "crest_factor": 1.41, "band_levels": [-126.0, -84.5, -83.3, -81.4, 14.8], "filename": "ai_audiosense_test_anomaly_9kHz.wav" } Lógica simple de anomalía: Si dominant_freq > 8500 o flatness > 0.3 → estado “Anómalo”. Frontend: Next.js (TypeScript + Tailwind + Recharts) AudioUploader.tsx → sube el .wav al backend. ResultCard.tsx → muestra métricas numéricas y el diagnóstico IA. ChartView.tsx → visualiza band_levels en barras. page.tsx → integra todo (sin romper flujo). 🎨 Estado actual del frontend Todo funciona correctamente. Flujo AudioUploader → backend → ChartView → ResultCard comprobado. El backend responde 200 OK desde Docker. Se muestran barras dinámicas según energía espectral real. El gráfico ya refleja diferencias entre sonidos normales y anómalos. 📊 Detalles técnicos ChartView.tsx usa Recharts para representar band_levels. El eje Y actualmente muestra los valores decibel (pueden ser negativos). Para una escala fija visual, se recomienda: domain={[-120, 0]} // escala fija dB page.tsx pasa correctamente los datos con: <ChartView levels={data.band_levels} /> El modo oscuro con degradado (from-slate-950 to-slate-900) está confirmado como estable. Compilación Next.js: los logs de /not-found son normales y no representan errores. ✅ Conclusión El sistema está 100% funcional y validado visualmente: El backend entrega datos reales. El frontend los renderiza correctamente. Los resultados cambian entre audios normales y anómalos. No hay errores en Network ni en Console. Objetivo para la nueva conversación: Continuar optimizando la interfaz de usuario (frontend) sin romper la integración con el backend. Mejorar visualización, agregar controles (volumen, reproducir audio, etc.) o integrar dashboards comparativos, manteniendo compatibilidad con FastAPI y Docker.
+
+
+*********************
+
+curl -X 'POST' \
+  'http://localhost:8000/analyze' \
+  -H 'accept: application/json' \
+  -H 'Content-Type: multipart/form-data' \
+  -F 'file=@ai_audiosense_test_anomaly_9kHz.wav;type=audio/wav'
+  
+JSON ->
+{
+  "rms_db": 70.4,
+  "dominant_freq_hz": 9000,
+  "confidence_percent": 85,
+  "status": "Anómalo",
+  "mensaje": "⚠️ Vibración anómala detectada",
+  "snr_db": 0,
+  "flatness": 0,
+  "crest_factor": 1.41,
+  "band_levels": [
+    -120,
+    -84.5,
+    -83.3,
+    -81.4,
+    14.8
+  ],
+  "filename": "ai_audiosense_test_anomaly_9kHz.wav"
+}
