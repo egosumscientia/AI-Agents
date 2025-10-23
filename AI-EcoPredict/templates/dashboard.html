@@ -9,7 +9,7 @@
     </p>
 
     <!-- FORM -->
-    <form id="predictForm" class="flex flex-wrap justify-center gap-3 mb-8">
+    <form id="predictForm" class="flex flex-wrap justify-center gap-3 mb-4">
         <input id="city" type="text" placeholder="City (optional)" 
             class="px-3 py-1 rounded bg-gray-800 text-white w-48 text-sm"
             aria-label="Enter city name">
@@ -34,6 +34,10 @@
         </button>
     </form>
 
+    <!-- 🧱 Error visible -->
+    <div id="errorBox"
+         class="hidden text-red-400 bg-red-950/30 border border-red-500/40 rounded-lg px-4 py-2 mb-6 text-sm text-center"></div>
+
     <!-- CHART -->
     <div id="chart-container" class="flex justify-center mt-6">
         <canvas id="chart" class="max-w-full" style="width: 90%; height: 360px;"></canvas>
@@ -43,34 +47,74 @@
 <!-- Chart.js -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
+// === ⚙️ Evitar mezcla de ciudad y coordenadas ===
+const cityInput = document.getElementById('city');
+const latInput = document.getElementById('lat');
+const lonInput = document.getElementById('lon');
+
+function clearCoordsIfCity() {
+    if (cityInput.value.trim() !== '') {
+        latInput.value = '';
+        lonInput.value = '';
+        latInput.disabled = true;
+        lonInput.disabled = true;
+    } else {
+        latInput.disabled = false;
+        lonInput.disabled = false;
+    }
+}
+
+function clearCityIfCoords() {
+    if (latInput.value.trim() !== '' || lonInput.value.trim() !== '') {
+        cityInput.value = '';
+        cityInput.disabled = true;
+    } else {
+        cityInput.disabled = false;
+    }
+}
+
+cityInput.addEventListener('input', clearCoordsIfCity);
+latInput.addEventListener('input', clearCityIfCoords);
+lonInput.addEventListener('input', clearCityIfCoords);
+
+// === 📊 Lógica de predicción ===
 document.getElementById('predictForm').addEventListener('submit', async e => {
     e.preventDefault();
 
-    const city = document.getElementById('city').value.trim();
-    const lat = document.getElementById('lat').value.trim();
-    const lon = document.getElementById('lon').value.trim();
+    const city = cityInput.value.trim();
+    const lat = latInput.value.trim();
+    const lon = lonInput.value.trim();
     const variable = document.getElementById('variable').value;
+    const errorBox = document.getElementById('errorBox');
 
-    // Construir URL correctamente
+    // Limpiar errores previos
+    errorBox.classList.add('hidden');
+    errorBox.textContent = '';
+
     const params = new URLSearchParams({ target: variable });
     if (city) params.set('city', city);
-    if (lat) params.set('lat', lat);
-    if (lon) params.set('lon', lon);
+    else if (lat && lon) {
+        params.set('lat', lat);
+        params.set('lon', lon);
+    }
 
     const url = `/api/predict?${params.toString()}`;
     console.log("🔍 Request:", url);
 
     try {
         const res = await fetch(url);
-        if (!res.ok) {
-            alert("Error al obtener datos del servidor");
+        const data = await res.json();
+
+        // --- 🚨 Mostrar errores visualmente ---
+        if (!res.ok || data.error) {
+            errorBox.textContent = data.error || "Error al obtener datos del servidor.";
+            errorBox.classList.remove('hidden');
             return;
         }
-        const data = await res.json();
-        console.log("✅ Response:", data);
 
         if (!data.predictions || !data.actual || !data.timestamps) {
-            alert("Prediction data incomplete. Try again or check console logs.");
+            errorBox.textContent = "Datos incompletos. Intente nuevamente.";
+            errorBox.classList.remove('hidden');
             return;
         }
 
@@ -125,8 +169,9 @@ document.getElementById('predictForm').addEventListener('submit', async e => {
             }
         });
     } catch (err) {
+        errorBox.textContent = "Error de conexión con el servidor.";
+        errorBox.classList.remove('hidden');
         console.error("❌ Error:", err);
-        alert("Error fetching data. Check console logs.");
     }
 });
 </script>

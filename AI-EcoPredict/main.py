@@ -5,9 +5,13 @@ from routers import dashboard, api
 
 app = FastAPI(title="AI–EcoPredict")
 
-# Mount static files
+# Archivos estáticos
 app.mount("/static", StaticFiles(directory="static"), name="static")
 
-# Register routers
-app.include_router(dashboard.router)
-app.include_router(api.router)
+# Templates
+templates = Jinja2Templates(directory="templates")
+
+# Rutas
+app.include_router(dashboard.router, tags=["Dashboard"])
+# 👈 Este es el punto clave
+app.include_router(api.router, prefix="/api", tags=["API"])

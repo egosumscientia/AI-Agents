@@ -1,9 +1,10 @@
-from fastapi import APIRouter, Request
+from fastapi import APIRouter
+import requests
+import pandas as pd
 from services.weather_service import fetch_weather_data
 from services.model_service import train_and_predict
-import requests
 
-router = APIRouter(prefix="/api")
+router = APIRouter()
 
 
 @router.get("/predict")
@@ -13,45 +14,85 @@ async def predict(
     lon: float | None = None,
     target: str = "temperature_2m"
 ):
-    """Fetch data from Open-Meteo, geocode city name if needed, then predict."""
+    """
+    Endpoint para obtener predicciones de clima.
+    Si se pasa una ciudad, usa geocoding.
+    Si se pasan coordenadas, las corrige si están invertidas o con signo incorrecto.
+    """
 
-    # --- Try geocoding if a city name was provided ---
+    # === CASO 1: Nombre de ciudad ===
     if city:
         try:
-            geo_url = f"https://geocoding-api.open-meteo.com/v1/search?name={city}&count=1"
+            geo_url = f"https://geocoding-api.open-meteo.com/v1/search?name={city}&count=1&language=es"
             resp = requests.get(geo_url, timeout=10)
-            if resp.ok and resp.json().get("results"):
-                loc = resp.json()["results"][0]
-                lat = loc["latitude"]
-                lon = loc["longitude"]
-                city = loc.get("name", city)
-                print(f"Resolved city '{city}' -> ({lat}, {lon})")
-            else:
-                print(f"⚠️ City '{city}' not found, no coordinates resolved.")
+            if not resp.ok:
+                print(f"⚠️ Error en API de geocodificación para '{city}'")
+                return {"error": f"No se pudo obtener coordenadas para '{city}'"}
+
+            data = resp.json()
+            if not data.get("results"):
+                print(f"⚠️ Ciudad '{city}' no encontrada en geocoding API.")
+                return {"error": f"La ciudad '{city}' no existe o está mal escrita."}
+
+            loc = data["results"][0]
+            lat, lon = loc["latitude"], loc["longitude"]
+            city = loc["name"]
+            print(f"✅ Resolved city '{city}' -> ({lat}, {lon})")
+
         except Exception as e:
-            print(f"⚠️ Geocoding failed: {e}")
+            print(f"❌ Error geocodificando '{city}': {e}")
+            return {"error": f"No se pudo validar la ciudad '{city}'. Error: {e}"}
 
-    # --- Default fallback only if *nothing* is provided ---
-    if (
-        lat is None
-        or lon is None
-        or str(lat).lower() == "nan"
-        or str(lon).lower() == "nan"
-    ):
-        if not city:
-            # Only use Bogotá if there is no city and no coordinates
-            city = "Bogotá"
-            lat, lon = 4.61, -74.08
-            print(f"Using fallback coordinates for {city}: ({lat}, {lon})")
-        else:
-            print(
-                f"No coordinates found for '{city}', cannot geocode — using name only.")
+    # === CASO 2: Coordenadas ===
+    elif lat is not None and lon is not None:
+        try:
+            # Corrige coordenadas invertidas (usuario pone lon en lat)
+            if abs(lat) > 90 and abs(lon) < 90:
+                lat, lon = lon, lat
+                print(f"⚠️ Coordenadas invertidas -> ({lat}, {lon})")
 
-    # --- Fetch weather data ---
+            # Corrige signo de longitud (si el usuario mete positivo en occidente)
+            if lon > 0:
+                lon = -lon
+                print(f"⚠️ Corrigiendo signo de longitud -> ({lon})")
+
+            # Reverse geocoding para mostrar ciudad en el gráfico
+            geo_url = f"https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat={lat}&lon={lon}"
+            resp = requests.get(
+                geo_url, headers={"User-Agent": "AI-EcoPredict"}, timeout=10)
+            if resp.ok:
+                address = resp.json().get("address", {})
+                city = (
+                    address.get("city")
+                    or address.get("town")
+                    or address.get("village")
+                    or address.get("county")
+                    or f"Lat: {lat:.2f}, Lon: {lon:.2f}"
+                )
+                print(f"✅ Reverse geocoded to '{city}'")
+            else:
+                city = f"Lat: {lat:.2f}, Lon: {lon:.2f}"
+
+        except Exception as e:
+            print(f"⚠️ Error en reverse geocoding: {e}")
+            city = f"Lat: {lat:.2f}, Lon: {lon:.2f}"
+
+    # === CASO 3: Sin parámetros válidos ===
+    else:
+        print("❌ Debes ingresar una ciudad o coordenadas.")
+        return {"error": "Debes ingresar una ciudad o coordenadas válidas."}
+
+    # === Obtiene datos y predicciones ===
+    print(f"🌍 Fetching weather for {city} @ ({lat}, {lon})")
+
     df = fetch_weather_data(lat, lon)
     preds = train_and_predict(df, target=target)
+
     actual = df[target].tolist()
     timestamps = df["time"].astype(str).tolist()[-len(preds):]
+
+    mae = abs(df[target] - pd.Series(preds)).mean()
+    print(f"✅ MAE for {target}: {mae:.3f}")
 
     return {
         "city": city,
@@ -60,13 +101,3 @@ async def predict(
         "actual": actual,
         "timestamps": timestamps,
     }
-
-
-@router.post("/update")
-async def update_model(request: Request):
-    """Manual retraining triggered from UI button."""
-    payload = await request.json()
-    lat, lon = payload.get("lat"), payload.get("lon")
-    df = fetch_weather_data(lat, lon)
-    _ = train_and_predict(df, retrain=True)
-    return {"status": "Model retrained successfully"}
