@@ -1,23 +1,133 @@
 {% extends 'base.html' %}
 {% block content %}
-<div class="text-center">
-    <h2 class="text-2xl text-cyan-400 font-semibold mb-4">Weather Prediction Dashboard</h2>
-    <p class="text-gray-400 mb-6">Select a location and update the model to generate new predictions.</p>
-    <form id="predictForm" class="flex justify-center space-x-4 mb-8">
-        <input id="lat" type="number" step="any" placeholder="Latitude" class="px-3 py-1 rounded bg-gray-800 text-white">
-        <input id="lon" type="number" step="any" placeholder="Longitude" class="px-3 py-1 rounded bg-gray-800 text-white">
-        <button type="submit" class="bg-cyan-500 hover:bg-cyan-600 px-4 py-1 rounded text-sm">Predict</button>
+<div class="text-center max-w-5xl mx-auto">
+    <h2 class="text-2xl text-cyan-400 font-semibold mb-4">
+        Weather Prediction Dashboard
+    </h2>
+    <p class="text-gray-400 mb-6">
+        Select a location and a variable to visualize predicted vs actual data.
+    </p>
+
+    <!-- FORM -->
+    <form id="predictForm" class="flex flex-wrap justify-center gap-3 mb-8">
+        <input id="city" type="text" placeholder="City (optional)" 
+            class="px-3 py-1 rounded bg-gray-800 text-white w-48 text-sm"
+            aria-label="Enter city name">
+
+        <input id="lat" type="number" step="any" placeholder="Latitude"
+            class="px-3 py-1 rounded bg-gray-800 text-white w-32 text-sm">
+        <input id="lon" type="number" step="any" placeholder="Longitude"
+            class="px-3 py-1 rounded bg-gray-800 text-white w-32 text-sm">
+
+        <select id="variable" class="px-3 py-1 rounded bg-gray-800 text-white text-sm"
+                aria-label="Select variable">
+            <option value="temperature_2m">Temperature (°C)</option>
+            <option value="relative_humidity_2m">Humidity (%)</option>
+            <option value="pressure_msl">Pressure (hPa)</option>
+            <option value="precipitation">Precipitation (mm)</option>
+            <option value="wind_speed_10m">Wind Speed (m/s)</option>
+        </select>
+
+        <button type="submit"
+                class="bg-cyan-500 hover:bg-cyan-600 px-4 py-1 rounded text-sm">
+            Predict
+        </button>
     </form>
-    <div id="results" class="mt-6 text-gray-300"></div>
+
+    <!-- CHART -->
+    <div id="chart-container" class="flex justify-center mt-6">
+        <canvas id="chart" class="max-w-full" style="width: 90%; height: 360px;"></canvas>
+    </div>
 </div>
+
+<!-- Chart.js -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
 document.getElementById('predictForm').addEventListener('submit', async e => {
     e.preventDefault();
-    const lat = parseFloat(document.getElementById('lat').value);
-    const lon = parseFloat(document.getElementById('lon').value);
-    const res = await fetch(`/api/predict?lat=${lat}&lon=${lon}`);
-    const data = await res.json();
-    document.getElementById('results').innerText = JSON.stringify(data, null, 2);
+
+    const city = document.getElementById('city').value.trim();
+    const lat = document.getElementById('lat').value.trim();
+    const lon = document.getElementById('lon').value.trim();
+    const variable = document.getElementById('variable').value;
+
+    // Construir URL correctamente
+    const params = new URLSearchParams({ target: variable });
+    if (city) params.set('city', city);
+    if (lat) params.set('lat', lat);
+    if (lon) params.set('lon', lon);
+
+    const url = `/api/predict?${params.toString()}`;
+    console.log("🔍 Request:", url);
+
+    try {
+        const res = await fetch(url);
+        if (!res.ok) {
+            alert("Error al obtener datos del servidor");
+            return;
+        }
+        const data = await res.json();
+        console.log("✅ Response:", data);
+
+        if (!data.predictions || !data.actual || !data.timestamps) {
+            alert("Prediction data incomplete. Try again or check console logs.");
+            return;
+        }
+
+        // Destruye gráfico anterior
+        if (window.chartInstance) window.chartInstance.destroy();
+
+        const ctx = document.getElementById('chart');
+        window.chartInstance = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: data.timestamps.slice(-data.predictions.length),
+                datasets: [
+                    {
+                        label: `Predicted ${variable} (${data.city})`,
+                        data: data.predictions,
+                        borderColor: '#06b6d4',
+                        backgroundColor: 'rgba(6,182,212,0.25)',
+                        tension: 0.3,
+                    },
+                    {
+                        label: `Actual ${variable} (${data.city})`,
+                        data: data.actual.slice(-data.predictions.length),
+                        borderColor: '#10b981',
+                        backgroundColor: 'rgba(16,185,129,0.25)',
+                        borderDash: [5,5],
+                        tension: 0.3,
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        labels: { color: '#e5e5e5', boxWidth: 15 }
+                    },
+                    tooltip: {
+                        mode: 'index',
+                        intersect: false
+                    }
+                },
+                scales: {
+                    x: {
+                        ticks: { color: '#aaa', maxRotation: 45, minRotation: 45 },
+                        title: { display: true, text: 'Time (UTC)', color: '#aaa' }
+                    },
+                    y: {
+                        ticks: { color: '#aaa' },
+                        title: { display: true, text: variable, color: '#aaa' }
+                    }
+                }
+            }
+        });
+    } catch (err) {
+        console.error("❌ Error:", err);
+        alert("Error fetching data. Check console logs.");
+    }
 });
 </script>
 {% endblock %}
