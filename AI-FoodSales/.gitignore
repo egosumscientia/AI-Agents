@@ -1,0 +1,116 @@
+# =========================================
+# PYTHON / FASTAPI / DOCKER PROJECT
+# =========================================
+
+# --- Python ---
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.pyc
+*$py.class
+.env
+venv/
+env/
+ENV/
+.venv/
+
+# --- Distribution / Packaging ---
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# --- Logs and temp files ---
+*.log
+logs/
+*.pid
+*.gz
+*.swp
+*.swo
+*.tmp
+tmp/
+.cache/
+pytest_cache/
+
+# --- Data ---
+data/*.csv
+data/*.json
+data/*.xlsx
+data/*.db
+*.sqlite3
+
+# --- Jupyter / Notebooks ---
+.ipynb_checkpoints/
+
+# --- Editors ---
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# --- OS files ---
+.DS_Store
+Thumbs.db
+
+# --- Docker ---
+*.pid
+*.seed
+*.pid.lock
+docker-compose.override.yml
+.env.docker
+.env.prod
+.env.local
+.env.test
+.env.dev
+*.tar
+*.bak
+
+# --- Local config ---
+config/*.local.json
+settings/*.local.yaml
+
+# --- Byte-compiled ---
+**/__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# --- Cache folders ---
+__pypackages__/
+pip-wheel-metadata/
+
+# --- Misc ---
+coverage/
+htmlcov/
+.tox/
+.mypy_cache/
+.dmypy.json
+.pyre/
+.pytype/
+
+# --- FastAPI / Uvicorn specific ---
+*.db-journal
+*.sqlite-journal
+*.sqlite
+*.sqlite3
+
+# --- Project specific ---
+/app/__pycache__/
+/app/logs/
+/app/data/Catalog.csv
+/app/data/faq.json
+/app/data/synonyms.json
