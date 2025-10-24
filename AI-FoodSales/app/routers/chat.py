@@ -12,6 +12,7 @@ router = APIRouter(prefix="/chat", tags=["Chat"])
 class ChatMessage(BaseModel):
     message: str
     session_id: str | None = None
+    channel: str | None = None
 
 @router.post("/")
 async def chat_endpoint(data: ChatMessage):
@@ -29,6 +30,6 @@ async def chat_endpoint(data: ChatMessage):
 
     escalation = should_escalate(user_input)
     summary = build_summary(user_input, response)
-    log_interaction(data.session_id or "default", user_input, response)
+    log_interaction(data.session_id or "default", user_input, response, data.channel or "unknown")
 
     return {"agent_response": response, "should_escalate": escalation, "summary": summary}

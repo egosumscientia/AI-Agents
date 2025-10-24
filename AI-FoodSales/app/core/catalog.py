@@ -1,10 +1,11 @@
-import csv
+import csv, os
 def find_product(name):
     try:
-        with open("app/data/Catalog.csv", newline='', encoding='utf-8') as f:
+        path = os.path.join('app','data','Catalog.csv')
+        with open(path, newline='', encoding='utf-8') as f:
             reader = csv.DictReader(f)
             for row in reader:
-                if row["Producto"].lower() == name.lower():
+                if row.get('Producto','').strip().lower() == name.lower():
                     return row
         return None
     except Exception:
