@@ -46,6 +46,8 @@ def find_product_from_message(message: str) -> str | None:
     Busca el producto más probable en el catálogo.
     Incluye coincidencia difusa, sinónimos y control de umbral.
     """
+    print("✅ EJECUTANDO VERSION CORRECTA DE catalog.py")
+
     msg = normalize_text(message)
     words = msg.split()
     best_match = None
@@ -53,9 +55,15 @@ def find_product_from_message(message: str) -> str | None:
 
     # 🔹 Prioridad 1: sinónimos (si existe synonyms.json)
     for key, variants in SYNONYMS.items():
-        if any(normalize_text(v) in msg for v in variants):
-            print(f"[DEBUG] Coincidencia por sinónimo: {key}")
-            return key
+        for variant in variants:
+            norm_variant = normalize_text(variant)
+            # Ignorar palabras demasiado cortas para evitar falsos positivos
+            if len(norm_variant) <= 2:
+                continue
+            if re.search(rf"\b{re.escape(norm_variant)}\b", msg):
+                print(f"[DEBUG] Coincidencia exacta por sinónimo: {key}")
+                return key
+
 
     # 🔹 Prioridad 2: coincidencia directa o parcial
     for row in CATALOG:
@@ -69,7 +77,7 @@ def find_product_from_message(message: str) -> str | None:
     # 🔹 Prioridad 3: coincidencia difusa más general
     all_names = [normalize_text(r["nombre"]) for r in CATALOG]
     for w in words:
-        matches = difflib.get_close_matches(w, all_names, n=1, cutoff=0.5)
+        matches = difflib.get_close_matches(w, all_names, n=1, cutoff=0.65)
         if matches:
             for r in CATALOG:
                 if normalize_text(r["nombre"]) == matches[0]:
@@ -77,12 +85,23 @@ def find_product_from_message(message: str) -> str | None:
                     if score > best_score:
                         best_match, best_score = r["nombre"], score
 
-    if best_match and best_score >= 0.55:
-        print(f"[DEBUG] Mejor coincidencia: {best_match} (score={best_score:.2f})")
-        return best_match
-    else:
+  # 🔹 Filtro final para evitar falsos positivos (como 'detergente' → 'té verde')
+    # ------------------------------------------------------------------
+    # 🔹 Filtro final y retorno controlado
+    # ------------------------------------------------------------------
+    if not best_match:
         print(f"[DEBUG] Ninguna coincidencia fuerte (max score={best_score:.2f})")
         return None
+
+    # 🔹 Evita falsos positivos (ej. 'detergente' → 'té verde')
+    if best_score < 0.65:
+        print(f"[DEBUG] Coincidencia débil descartada (score={best_score:.2f})")
+        return None
+
+    print(f"[DEBUG] Mejor coincidencia aceptada: {best_match} (score={best_score:.2f})")
+    return best_match
+
+
 
 # ----------------------------------------------------------------------
 # 4️⃣ ACCESO A UNA FILA COMPLETA DEL CATÁLOGO

@@ -1,44 +1,56 @@
 {
   "Papa a la francesa 9mm": [
-    "papas",
-    "papa",
-    "papas fritas",
-    "papa frita",
-    "papitas",
-    "papas congeladas",
-    "french fries",
-    "papas a la francesa",
-    "papitas a la francesa",
-    "peritas"
+    "papas", "papa", "papas fritas", "papa frita", "papitas",
+    "papas congeladas", "french fries", "papas a la francesa",
+    "papitas a la francesa", "peritas"
   ],
   "Arepas rellenas": [
-    "arepas",
-    "arepa",
-    "arepitas",
-    "arepa rellena",
-    "arepas rellenas"
+    "arepas", "arepa", "arepitas", "arepa rellena", "arepas rellenas"
   ],
   "Queso mozzarella": [
-    "mozzarella",
-    "mozarrella",
-    "queso mozzarella",
-    "queso mozarela",
-    "quesito mozzarella",
-    "queso pizza"
+    "mozzarella", "mozarrella", "queso mozzarella", "queso mozarela",
+    "quesito mozzarella", "queso pizza"
   ],
   "Agua mineral": [
-    "agua",
-    "agüita",
-    "agua mineral",
-    "agua con gas",
-    "botella de agua",
-    "agua sin gas"
+    "agua", "agüita", "agua mineral", "agua con gas", "botella de agua", "agua sin gas"
   ],
   "Croquetas de pollo": [
-    "nuggets",
-    "croquetas",
-    "croquetas de pollo",
-    "bolitas de pollo",
-    "nuggets de pollo"
+    "nuggets", "croquetas", "croquetas de pollo", "bolitas de pollo", "nuggets de pollo"
+  ],
+  "Leche entera": [
+    "leche", "leche líquida", "leche normal", "paquete de leche", "litro de leche"
+  ],
+  "Kumis": [
+    "yogurt líquido", "kumis", "lácteo fermentado", "yogur bebible", "bebida láctea"
+  ],
+  "Cerveza artesanal": [
+    "cerveza", "birra", "chela", "cerveza especial", "cerveza de barril", "cerveza artesanal"
+  ],
+  "Mantequilla sin sal": [
+    "mantequilla", "manteca", "mantequilla natural", "mantequilla sin sal"
+  ],
+  "Galletas integrales": [
+    "galletas", "galleticas", "galletas de fibra", "snacks integrales", "galletitas"
+  ],
+  "Yogur natural": [
+    "yogur", "yogurt", "yogurcito", "yogur natural", "yogurt natural"
+  ],
+  "Jugo de naranja": [
+    "jugo", "juguito", "jugo natural", "zumo de naranja", "jugo de fruta"
+  ],
+  "Té verde": [
+    "té", "té natural", "infusión verde", "te verde", "te natural"
+  ],
+  "Mix de frutos secos": [
+    "frutos secos", "nueces", "almendras", "mezcla de frutos", "snack de frutos secos"
+  ],
+  "Chips de plátano": [
+    "platanitos", "plátano frito", "snacks de plátano", "chips de plátano"
+  ],
+  "Barra de granola": [
+    "granola", "barrita", "snack de granola", "barra energética"
+  ],
+  "Tostadas de maíz": [
+    "tostadas", "nachos", "totopos", "chips de maíz"
   ]
 }

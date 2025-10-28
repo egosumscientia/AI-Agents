@@ -12,6 +12,34 @@ def detect_intent(text: str) -> str:
         return 'faq'
     return 'other'
 
+def detect_purchase_intent(text: str) -> str:
+    """
+    Detecta el nivel de intención de compra ('high', 'medium', 'low')
+    basado en señales contextuales del mensaje del cliente.
+    """
+    text = text.lower()
+
+    # Alta intención: ya está comprando o pide acción inmediata
+    high_intent = [
+        "envíame", "hazme la cuenta", "quiero pedir", "cotízame", 
+        "necesito para", "urgente", "mándame la cotización", 
+        "cómo te pago", "cuánto me sale", "ya tengo pedido"
+    ]
+
+    # Media intención: está evaluando precios o disponibilidad
+    medium_intent = [
+        "me interesa", "cuánto vale", "qué precio tiene", 
+        "pueden enviar", "cuánto demora", "quiero saber si tienen", 
+        "podrían cotizarme", "estoy mirando precios"
+    ]
+
+    if any(p in text for p in high_intent):
+        return "high"
+    elif any(p in text for p in medium_intent):
+        return "medium"
+    return "low"
+
+
 def normalize_input(text: str) -> str | None:
     """Busca el nombre canónico de producto con coincidencia flexible."""
     try:
