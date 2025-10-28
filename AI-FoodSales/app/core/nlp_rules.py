@@ -40,6 +40,67 @@ def detect_purchase_intent(text: str) -> str:
     return "low"
 
 
+def detect_logistics_intent(text: str) -> tuple[bool, dict]:
+    """
+    Detecta si el mensaje del usuario se refiere a temas logísticos
+    como tiempos o cobertura de entrega.
+    Retorna (True/False, {"type": str, "city": Optional[str]}).
+    """
+    if not text:
+        return False, {}
+
+    import unicodedata
+    import re
+
+    # 🔧 Limpieza robusta
+    text = text.lower().strip()
+    text = unicodedata.normalize("NFKD", text)
+    text = "".join(c for c in text if not unicodedata.combining(c))
+    text = text.replace("¿", "").replace("?", "").replace("¡", "").replace("!", "")
+
+    logistics_keywords = [
+        r"\b(entrega|entregan|entregar|entregado|entregas)\b",
+        r"\b(envio|envian|enviar|envios)\b",
+        r"\b(despacho|despachos|despachan|despachar)\b",
+        r"\b(reparto|domicilio|domicilios|mensajeria)\b",
+        r"\b(fines?\s+de\s+semana|sabados?|domingos?)\b",
+    ]
+
+    # 🧩 Debug útil
+    print(f"[DEBUG] Texto limpio recibido: {text}")
+    for pat in logistics_keywords:
+        if re.search(pat, text):
+            print(f"[DEBUG] Coincidencia con patrón: {pat}")
+
+    # 🔍 Verifica si hay alguna palabra logística
+    if not any(re.search(pat, text) for pat in logistics_keywords):
+        return False, {}
+
+    # 🧩 Subtipo de intención
+    if re.search(r"\b(fines?\s+de\s+semana|sabados?|domingos?)\b", text):
+        subtype = "weekend"
+    elif re.search(r"\b(cuanto\s+tardan?|tiempos?\s+de\s+entrega|plazo)\b", text):
+        subtype = "delivery_time"
+    elif re.search(r"\b(otras?\s+ciudades|fuera|nacional|envian\s+a)\b", text):
+        subtype = "coverage"
+    else:
+        subtype = "generic"
+
+    # 🏙️ Ciudad (si la menciona)
+    city_match = re.search(
+        r"\b(en|a)\s+(bogota|medellin|cali|barranquilla|cartagena|bucaramanga|pereira|manizales|cucuta)\b",
+        text,
+    )
+    city = city_match.group(2).title() if city_match else None
+
+    if city and subtype == "generic":
+        subtype = "city_delivery"
+
+    return True, {"type": subtype, "city": city}
+
+
+
+
 def normalize_input(text: str) -> str | None:
     """Busca el nombre canónico de producto con coincidencia flexible."""
     try:

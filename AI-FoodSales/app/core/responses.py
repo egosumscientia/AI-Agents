@@ -63,3 +63,26 @@ def generate_response(product_data: dict, message: str):
         "should_escalate": should_escalate,
         "summary": build_summary(message, response_text)
     }
+
+# === NUEVO BLOQUE: respuesta logística específica ===
+def build_logistics_response(subtype: str, city: str | None = None) -> str:
+    """
+    Genera una respuesta específica de logística sin interferir con el bloque FAQ.
+    """
+    if subtype == "weekend":
+        base_text = (
+            "Realizamos despachos de lunes a viernes. "
+            "Sábados sujetos a cobertura del operador logístico. "
+            "Los tiempos de entrega son de 2 a 3 días hábiles en ciudades principales "
+            "y de 4 a 6 días en regionales. ¿Deseas que te confirme la disponibilidad para tu zona?"
+        )
+    else:
+        base_text = (
+            "Los tiempos de entrega son de 2 a 3 días hábiles en ciudades principales "
+            "y de 4 a 6 días en regionales. ¿Deseas que te confirme la disponibilidad para tu zona?"
+        )
+
+    if city:
+        base_text = f"Para {city}: {base_text}"
+
+    return base_text

@@ -2,9 +2,9 @@ import os
 from fastapi import APIRouter
 from pydantic import BaseModel
 from app.core.catalog import find_product_from_message, get_product_row
-from app.core.responses import generate_response
+from app.core.responses import generate_response, build_logistics_response
 from app.core.summary import build_summary
-from app.core.nlp_rules import detect_purchase_intent  # 🧠 Detección de intención
+from app.core.nlp_rules import detect_purchase_intent, detect_logistics_intent
 
 router = APIRouter(prefix="/chat", tags=["Chat"])
 
@@ -18,34 +18,52 @@ class ChatMessage(BaseModel):
 @router.post("/")
 async def chat_endpoint(data: ChatMessage):
     try:
-        print("[DEBUG] chat.py ejecutado correctamente")
         user_input = data.message.lower().strip()
-        print(f"[DEBUG] Mensaje recibido: {user_input}")
 
         # 🔍 Detección de producto
         canonical_name = find_product_from_message(user_input)
-        print(f"[DEBUG] Producto detectado: {canonical_name}")
-
-        # 📦 Obtener fila del catálogo
         product_row = get_product_row(canonical_name) if canonical_name else None
-        print(f"[DEBUG] Fila encontrada: {product_row}")
 
         # 🧠 Detección de intención de compra
         intent_level = detect_purchase_intent(user_input)
-        print(f"[DEBUG] Nivel de intención detectado: {intent_level}")
 
         # 🤖 Generar respuesta principal
         response = generate_response(product_row, user_input)
 
-        # 🧩 Mejora en el caso de producto no encontrado (respuesta más natural)
-        if not product_row:
+        # 🚚 Detección de intención logística (delivery_info)
+        logistic_detected, logistic_info = detect_logistics_intent(user_input)
+        if logistic_detected and "entrega" not in response["agent_response"]:
+            subtype = logistic_info.get("type")
+            city = logistic_info.get("city")
+            logistics_text = build_logistics_response(subtype, city)
+
+            # Si hay producto → combinar ambas respuestas
+            if product_row:
+                response["agent_response"] += f"\n\n{logistics_text}"
+            else:
+                # Solo logística (sin producto)
+                return {
+                    "agent_response": logistics_text,
+                    "should_escalate": False,
+                    "summary": {
+                        "pedido_o_consulta": user_input,
+                        "accion_del_agente": "Información logística entregada.",
+                        "intencion_compra": intent_level,
+                        "delivery_info": {
+                            "detected": True,
+                            "type": subtype,
+                            "city": city,
+                        },
+                    },
+                }
+
+        # 🧩 Caso: producto no encontrado y sin intención logística
+        if not product_row and not logistic_detected:
             response["agent_response"] = (
                 "No encontré ese producto en nuestro catálogo actual. "
                 "¿Quieres que lo confirme un asesor o te muestro opciones similares?"
             )
             response["should_escalate"] = False
-
-        print(f"[DEBUG] Respuesta generada: {response}")
 
         # 🗣️ Ajustar respuesta según intención
         if intent_level == "high":
@@ -59,7 +77,6 @@ async def chat_endpoint(data: ChatMessage):
 
         # 📋 Crear resumen final
         summary = build_summary(user_input, response["agent_response"])
-        print(f"[DEBUG] Resumen: {summary}")
 
         return {
             "agent_response": response["agent_response"],
