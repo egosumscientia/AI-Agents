@@ -1,31 +1,44 @@
 {
   "Papa a la francesa 9mm": [
+    "papas",
+    "papa",
     "papas fritas",
+    "papa frita",
     "papitas",
     "papas congeladas",
     "french fries",
+    "papas a la francesa",
     "papitas a la francesa",
     "peritas"
   ],
   "Arepas rellenas": [
+    "arepas",
     "arepa",
     "arepitas",
-    "arepita rellena"
+    "arepa rellena",
+    "arepas rellenas"
   ],
   "Queso mozzarella": [
     "mozzarella",
+    "mozarrella",
+    "queso mozzarella",
+    "queso mozarela",
     "quesito mozzarella",
     "queso pizza"
   ],
   "Agua mineral": [
     "agua",
     "agüita",
+    "agua mineral",
     "agua con gas",
-    "botella de agua"
+    "botella de agua",
+    "agua sin gas"
   ],
   "Croquetas de pollo": [
     "nuggets",
     "croquetas",
-    "bolitas de pollo"
+    "croquetas de pollo",
+    "bolitas de pollo",
+    "nuggets de pollo"
   ]
 }

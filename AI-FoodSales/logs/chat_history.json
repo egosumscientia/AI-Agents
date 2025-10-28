@@ -5,5 +5,475 @@
     "channel": "unknown",
     "cliente": "¿qué productos tienes disponibles?",
     "agente": "¿Podrías especificar qué producto o información necesitas?"
+  },
+  {
+    "timestamp": "2025-10-27T19:30:17.796332",
+    "session_id": "default",
+    "channel": "unknown",
+    "cliente": "cuánto valen las papas",
+    "agente": "Ese producto no está en el catálogo cargado. ¿Quieres que lo confirme un asesor?"
+  },
+  {
+    "timestamp": "2025-10-27T19:35:45.290820",
+    "session_id": "default",
+    "channel": "unknown",
+    "cliente": "cuánto valen las papas",
+    "agente": "Ese producto no está en el catálogo cargado. ¿Quieres que lo confirme un asesor?"
+  },
+  {
+    "timestamp": "2025-10-27T19:36:30.215732",
+    "session_id": "default",
+    "channel": "unknown",
+    "cliente": "cuánto valen las papas",
+    "agente": "Ese producto no está en el catálogo cargado. ¿Quieres que lo confirme un asesor?"
+  },
+  {
+    "timestamp": "2025-10-27T19:36:35.083202",
+    "session_id": "default",
+    "channel": "unknown",
+    "cliente": "cuánto valen las papas",
+    "agente": "Ese producto no está en el catálogo cargado. ¿Quieres que lo confirme un asesor?"
+  },
+  {
+    "timestamp": "2025-10-27T19:36:35.841770",
+    "session_id": "default",
+    "channel": "unknown",
+    "cliente": "cuánto valen las papas",
+    "agente": "Ese producto no está en el catálogo cargado. ¿Quieres que lo confirme un asesor?"
+  },
+  {
+    "timestamp": "2025-10-27T19:42:01.452185",
+    "session_id": "default",
+    "channel": "unknown",
+    "cliente": "cuánto valen las papas",
+    "agente": "Ese producto no está en el catálogo cargado. ¿Quieres que lo confirme un asesor?"
+  },
+  {
+    "timestamp": "2025-10-27T19:43:01.258552",
+    "session_id": "default",
+    "channel": "unknown",
+    "cliente": "cuánto valen las papas",
+    "agente": "Ese producto no está en el catálogo cargado. ¿Quieres que lo confirme un asesor?"
+  },
+  {
+    "timestamp": "2025-10-27T19:43:02.388198",
+    "session_id": "default",
+    "channel": "unknown",
+    "cliente": "cuánto valen las papas",
+    "agente": "Ese producto no está en el catálogo cargado. ¿Quieres que lo confirme un asesor?"
+  },
+  {
+    "timestamp": "2025-10-27T19:43:48.690510",
+    "session_id": "default",
+    "channel": "unknown",
+    "cliente": "cuánto valen las papitas",
+    "agente": "Ese producto no está en el catálogo cargado. ¿Quieres que lo confirme un asesor?"
+  },
+  {
+    "timestamp": "2025-10-27T19:51:05.195194",
+    "session_id": "default",
+    "channel": "unknown",
+    "cliente": "cuánto valen las papas",
+    "agente": "Ese producto no está en el catálogo cargado. ¿Quieres que lo confirme un asesor?"
+  },
+  {
+    "timestamp": "2025-10-27T19:51:05.216106",
+    "session_id": "default",
+    "channel": "unknown",
+    "cliente": "tienen nuggets?",
+    "agente": "¿Podrías especificar qué producto o información necesitas?"
+  },
+  {
+    "timestamp": "2025-10-27T19:51:05.234248",
+    "session_id": "default",
+    "channel": "unknown",
+    "cliente": "precio de queso pizza",
+    "agente": "Ese producto no está en el catálogo cargado. ¿Quieres que lo confirme un asesor?"
+  },
+  {
+    "timestamp": "2025-10-27T19:53:21.133874",
+    "session_id": "default",
+    "channel": "unknown",
+    "cliente": "cuánto valen las papas",
+    "agente": "Ese producto no está en el catálogo cargado. ¿Quieres que lo confirme un asesor?"
+  },
+  {
+    "timestamp": "2025-10-27T19:53:21.149661",
+    "session_id": "default",
+    "channel": "unknown",
+    "cliente": "tienen nuggets?",
+    "agente": "¿Podrías especificar qué producto o información necesitas?"
+  },
+  {
+    "timestamp": "2025-10-27T19:53:21.170675",
+    "session_id": "default",
+    "channel": "unknown",
+    "cliente": "precio de queso pizza",
+    "agente": "Ese producto no está en el catálogo cargado. ¿Quieres que lo confirme un asesor?"
+  },
+  {
+    "timestamp": "2025-10-27T19:54:26.657931",
+    "session_id": "default",
+    "channel": "unknown",
+    "cliente": "cuánto valen las papas",
+    "agente": "Ese producto no está en el catálogo cargado. ¿Quieres que lo confirme un asesor?"
+  },
+  {
+    "timestamp": "2025-10-27T19:54:26.675175",
+    "session_id": "default",
+    "channel": "unknown",
+    "cliente": "tienen nuggets?",
+    "agente": "¿Podrías especificar qué producto o información necesitas?"
+  },
+  {
+    "timestamp": "2025-10-27T19:54:26.699776",
+    "session_id": "default",
+    "channel": "unknown",
+    "cliente": "precio de queso pizza",
+    "agente": "Ese producto no está en el catálogo cargado. ¿Quieres que lo confirme un asesor?"
+  },
+  {
+    "timestamp": "2025-10-27T19:57:54.089263",
+    "session_id": "default",
+    "channel": "unknown",
+    "cliente": "cuánto valen las papas",
+    "agente": "Tenemos disponible el None en presentación None.\nPrecio estimado: $None COP/unidad.\nPedido mínimo: None unidades.\n¿Quieres que te gestione la cotización?"
+  },
+  {
+    "timestamp": "2025-10-27T19:57:54.105288",
+    "session_id": "default",
+    "channel": "unknown",
+    "cliente": "tienen nuggets?",
+    "agente": "¿Podrías especificar qué producto o información necesitas?"
+  },
+  {
+    "timestamp": "2025-10-27T19:57:54.131588",
+    "session_id": "default",
+    "channel": "unknown",
+    "cliente": "precio de queso pizza",
+    "agente": "Tenemos disponible el None en presentación None.\nPrecio estimado: $None COP/unidad.\nPedido mínimo: None unidades.\n¿Quieres que te gestione la cotización?"
+  },
+  {
+    "timestamp": "2025-10-27T19:58:06.328010",
+    "session_id": "default",
+    "channel": "unknown",
+    "cliente": "cuánto valen las papas",
+    "agente": "Tenemos disponible el None en presentación None.\nPrecio estimado: $None COP/unidad.\nPedido mínimo: None unidades.\n¿Quieres que te gestione la cotización?"
+  },
+  {
+    "timestamp": "2025-10-27T19:58:06.345623",
+    "session_id": "default",
+    "channel": "unknown",
+    "cliente": "tienen nuggets?",
+    "agente": "¿Podrías especificar qué producto o información necesitas?"
+  },
+  {
+    "timestamp": "2025-10-27T19:58:06.366913",
+    "session_id": "default",
+    "channel": "unknown",
+    "cliente": "precio de queso pizza",
+    "agente": "Tenemos disponible el None en presentación None.\nPrecio estimado: $None COP/unidad.\nPedido mínimo: None unidades.\n¿Quieres que te gestione la cotización?"
+  },
+  {
+    "timestamp": "2025-10-27T20:03:10.054965",
+    "session_id": "default",
+    "channel": "unknown",
+    "cliente": "cuánto valen las papas",
+    "agente": "Tenemos disponible el producto desconocido en presentación presentación no especificada.\nPrecio estimado: $sin precio COP.\nPedido mínimo: N/D unidades.\n¿Quieres que te gestione la cotización?"
+  },
+  {
+    "timestamp": "2025-10-27T20:03:10.072160",
+    "session_id": "default",
+    "channel": "unknown",
+    "cliente": "tienen nuggets?",
+    "agente": "¿Podrías especificar qué producto o información necesitas?"
+  },
+  {
+    "timestamp": "2025-10-27T20:03:10.094927",
+    "session_id": "default",
+    "channel": "unknown",
+    "cliente": "precio de queso pizza",
+    "agente": "Tenemos disponible el producto desconocido en presentación presentación no especificada.\nPrecio estimado: $sin precio COP.\nPedido mínimo: N/D unidades.\n¿Quieres que te gestione la cotización?"
+  },
+  {
+    "timestamp": "2025-10-27T20:04:22.271110",
+    "session_id": "default",
+    "channel": "unknown",
+    "cliente": "cuánto valen las papas",
+    "agente": "Tenemos disponible el producto desconocido en presentación presentación no especificada.\nPrecio estimado: $sin precio COP.\nPedido mínimo: N/D unidades.\n¿Quieres que te gestione la cotización?"
+  },
+  {
+    "timestamp": "2025-10-27T20:04:22.292636",
+    "session_id": "default",
+    "channel": "unknown",
+    "cliente": "tienen nuggets?",
+    "agente": "¿Podrías especificar qué producto o información necesitas?"
+  },
+  {
+    "timestamp": "2025-10-27T20:04:22.320477",
+    "session_id": "default",
+    "channel": "unknown",
+    "cliente": "precio de queso pizza",
+    "agente": "Tenemos disponible el producto desconocido en presentación presentación no especificada.\nPrecio estimado: $sin precio COP.\nPedido mínimo: N/D unidades.\n¿Quieres que te gestione la cotización?"
+  },
+  {
+    "timestamp": "2025-10-27T20:04:53.773177",
+    "session_id": "default",
+    "channel": "unknown",
+    "cliente": "cuánto valen las papas",
+    "agente": "Tenemos disponible el producto desconocido en presentación presentación no especificada.\nPrecio estimado: $sin precio COP.\nPedido mínimo: N/D unidades.\n¿Quieres que te gestione la cotización?"
+  },
+  {
+    "timestamp": "2025-10-27T20:04:53.789208",
+    "session_id": "default",
+    "channel": "unknown",
+    "cliente": "tienen nuggets?",
+    "agente": "¿Podrías especificar qué producto o información necesitas?"
+  },
+  {
+    "timestamp": "2025-10-27T20:04:53.817173",
+    "session_id": "default",
+    "channel": "unknown",
+    "cliente": "precio de queso pizza",
+    "agente": "Tenemos disponible el producto desconocido en presentación presentación no especificada.\nPrecio estimado: $sin precio COP.\nPedido mínimo: N/D unidades.\n¿Quieres que te gestione la cotización?"
+  },
+  {
+    "timestamp": "2025-10-27T20:06:34.125770",
+    "session_id": "default",
+    "channel": "unknown",
+    "cliente": "cuánto valen las papas",
+    "agente": "Tenemos disponible el producto desconocido en presentación presentación no especificada.\nPrecio estimado: $sin precio COP.\nPedido mínimo: N/D unidades.\n¿Quieres que te gestione la cotización?"
+  },
+  {
+    "timestamp": "2025-10-27T20:06:34.142568",
+    "session_id": "default",
+    "channel": "unknown",
+    "cliente": "tienen nuggets?",
+    "agente": "¿Podrías especificar qué producto o información necesitas?"
+  },
+  {
+    "timestamp": "2025-10-27T20:06:34.165768",
+    "session_id": "default",
+    "channel": "unknown",
+    "cliente": "precio de queso pizza",
+    "agente": "Tenemos disponible el producto desconocido en presentación presentación no especificada.\nPrecio estimado: $sin precio COP.\nPedido mínimo: N/D unidades.\n¿Quieres que te gestione la cotización?"
+  },
+  {
+    "timestamp": "2025-10-27T20:07:43.012452",
+    "session_id": "default",
+    "channel": "unknown",
+    "cliente": "cuánto valen las papitas",
+    "agente": "Tenemos disponible el producto desconocido en presentación presentación no especificada.\nPrecio estimado: $sin precio COP.\nPedido mínimo: N/D unidades.\n¿Quieres que te gestione la cotización?"
+  },
+  {
+    "timestamp": "2025-10-27T20:08:15.850025",
+    "session_id": "default",
+    "channel": "unknown",
+    "cliente": "cuánto valen las papas",
+    "agente": "Tenemos disponible el producto desconocido en presentación presentación no especificada.\nPrecio estimado: $sin precio COP.\nPedido mínimo: N/D unidades.\n¿Quieres que te gestione la cotización?"
+  },
+  {
+    "timestamp": "2025-10-27T20:08:15.866745",
+    "session_id": "default",
+    "channel": "unknown",
+    "cliente": "tienen nuggets?",
+    "agente": "¿Podrías especificar qué producto o información necesitas?"
+  },
+  {
+    "timestamp": "2025-10-27T20:08:15.890293",
+    "session_id": "default",
+    "channel": "unknown",
+    "cliente": "precio de queso pizza",
+    "agente": "Tenemos disponible el producto desconocido en presentación presentación no especificada.\nPrecio estimado: $sin precio COP.\nPedido mínimo: N/D unidades.\n¿Quieres que te gestione la cotización?"
+  },
+  {
+    "timestamp": "2025-10-27T20:08:21.067340",
+    "session_id": "default",
+    "channel": "unknown",
+    "cliente": "cuánto valen las papitas",
+    "agente": "Tenemos disponible el producto desconocido en presentación presentación no especificada.\nPrecio estimado: $sin precio COP.\nPedido mínimo: N/D unidades.\n¿Quieres que te gestione la cotización?"
+  },
+  {
+    "timestamp": "2025-10-27T20:08:21.687582",
+    "session_id": "default",
+    "channel": "unknown",
+    "cliente": "cuánto valen las papitas",
+    "agente": "Tenemos disponible el producto desconocido en presentación presentación no especificada.\nPrecio estimado: $sin precio COP.\nPedido mínimo: N/D unidades.\n¿Quieres que te gestione la cotización?"
+  },
+  {
+    "timestamp": "2025-10-27T20:11:15.531782",
+    "session_id": "default",
+    "channel": "unknown",
+    "cliente": "cuánto valen las papas",
+    "agente": "Tenemos disponible el producto desconocido en presentación presentación no especificada.\nPrecio estimado: $sin precio COP.\nPedido mínimo: N/D unidades.\n¿Quieres que te gestione la cotización?"
+  },
+  {
+    "timestamp": "2025-10-27T20:11:15.549541",
+    "session_id": "default",
+    "channel": "unknown",
+    "cliente": "tienen nuggets?",
+    "agente": "¿Podrías especificar qué producto o información necesitas?"
+  },
+  {
+    "timestamp": "2025-10-27T20:11:15.571914",
+    "session_id": "default",
+    "channel": "unknown",
+    "cliente": "precio de queso pizza",
+    "agente": "Tenemos disponible el producto desconocido en presentación presentación no especificada.\nPrecio estimado: $sin precio COP.\nPedido mínimo: N/D unidades.\n¿Quieres que te gestione la cotización?"
+  },
+  {
+    "timestamp": "2025-10-27T20:14:23.208279",
+    "session_id": "default",
+    "channel": "unknown",
+    "cliente": "cuánto valen las papas",
+    "agente": "Tenemos disponible el producto desconocido en presentación presentación no especificada.\nPrecio estimado: $sin precio COP.\nPedido mínimo: N/D unidades.\n¿Quieres que te gestione la cotización?"
+  },
+  {
+    "timestamp": "2025-10-27T20:14:23.225530",
+    "session_id": "default",
+    "channel": "unknown",
+    "cliente": "tienen nuggets?",
+    "agente": "¿Podrías especificar qué producto o información necesitas?"
+  },
+  {
+    "timestamp": "2025-10-27T20:14:23.248878",
+    "session_id": "default",
+    "channel": "unknown",
+    "cliente": "precio de queso pizza",
+    "agente": "Tenemos disponible el producto desconocido en presentación presentación no especificada.\nPrecio estimado: $sin precio COP.\nPedido mínimo: N/D unidades.\n¿Quieres que te gestione la cotización?"
+  },
+  {
+    "timestamp": "2025-10-27T20:15:29.400888",
+    "session_id": "default",
+    "channel": "unknown",
+    "cliente": "cuánto valen las papas",
+    "agente": "Tenemos disponible el producto desconocido en presentación presentación no especificada.\nPrecio estimado: $sin precio COP.\nPedido mínimo: N/D unidades.\n¿Quieres que te gestione la cotización?"
+  },
+  {
+    "timestamp": "2025-10-27T20:16:58.734133",
+    "session_id": "default",
+    "channel": "unknown",
+    "cliente": "cuánto valen las papas",
+    "agente": "Tenemos disponible el producto desconocido en presentación presentación no especificada.\nPrecio estimado: $sin precio COP.\nPedido mínimo: N/D unidades.\n¿Quieres que te gestione la cotización?"
+  },
+  {
+    "timestamp": "2025-10-27T20:17:06.856617",
+    "session_id": "default",
+    "channel": "unknown",
+    "cliente": "cuánto valen las papas",
+    "agente": "Tenemos disponible el producto desconocido en presentación presentación no especificada.\nPrecio estimado: $sin precio COP.\nPedido mínimo: N/D unidades.\n¿Quieres que te gestione la cotización?"
+  },
+  {
+    "timestamp": "2025-10-27T20:18:37.286440",
+    "session_id": "default",
+    "channel": "unknown",
+    "cliente": "cuánto valen las papas",
+    "agente": "Tenemos disponible el producto desconocido en presentación presentación no especificada.\nPrecio estimado: $sin precio COP.\nPedido mínimo: N/D unidades.\n¿Quieres que te gestione la cotización?"
+  },
+  {
+    "timestamp": "2025-10-27T20:20:53.842591",
+    "session_id": "default",
+    "channel": "unknown",
+    "cliente": "cuánto valen las papas",
+    "agente": "Tenemos disponible el producto desconocido en presentación presentación no especificada.\nPrecio estimado: $sin precio COP.\nPedido mínimo: N/D unidades.\n¿Quieres que te gestione la cotización?"
+  },
+  {
+    "timestamp": "2025-10-27T20:26:38.273070",
+    "session_id": "default",
+    "channel": "unknown",
+    "cliente": "cuánto valen las papas",
+    "agente": "Tenemos disponible el producto desconocido en presentación presentación no especificada.\nPrecio estimado: $sin precio COP.\nPedido mínimo: N/D unidades.\n¿Quieres que te gestione la cotización?"
+  },
+  {
+    "timestamp": "2025-10-27T20:28:03.042854",
+    "session_id": "default",
+    "channel": "unknown",
+    "cliente": "cuánto valen las papas",
+    "agente": "Tenemos disponible el producto desconocido en presentación presentación no especificada.\nPrecio estimado: $sin precio COP.\nPedido mínimo: N/D unidades.\n¿Quieres que te gestione la cotización?"
+  },
+  {
+    "timestamp": "2025-10-27T20:30:42.504371",
+    "session_id": "default",
+    "channel": "unknown",
+    "cliente": "cuánto valen las papas",
+    "agente": "Tenemos disponible el producto desconocido en presentación presentación no especificada.\nPrecio estimado: $sin precio COP.\nPedido mínimo: N/D unidades.\n¿Quieres que te gestione la cotización?"
+  },
+  {
+    "timestamp": "2025-10-27T20:34:36.564268",
+    "session_id": "default",
+    "channel": "unknown",
+    "cliente": "cuánto valen las papas",
+    "agente": "Tenemos disponible el producto desconocido en presentación presentación no especificada.\nPrecio estimado: $sin precio COP.\nPedido mínimo: N/D unidades.\n¿Quieres que te gestione la cotización?"
+  },
+  {
+    "timestamp": "2025-10-27T20:39:03.094428",
+    "session_id": "default",
+    "channel": "unknown",
+    "cliente": "cuánto valen las papas",
+    "agente": "Tenemos disponible el producto desconocido en presentación presentación no especificada.\nPrecio estimado: $sin precio COP.\nPedido mínimo: N/D unidades.\n¿Quieres que te gestione la cotización?"
+  },
+  {
+    "timestamp": "2025-10-27T20:46:35.191993",
+    "session_id": "default",
+    "channel": "unknown",
+    "cliente": "cuánto valen las papas",
+    "agente": "Tenemos disponible el producto desconocido en presentación presentación no especificada.\nPrecio estimado: $sin precio COP.\nPedido mínimo: N/D unidades.\n¿Quieres que te gestione la cotización?"
+  },
+  {
+    "timestamp": "2025-10-27T20:47:55.548658",
+    "session_id": "default",
+    "channel": "unknown",
+    "cliente": "cuánto valen las papas",
+    "agente": "Tenemos disponible el producto desconocido en presentación presentación no especificada.\nPrecio estimado: $sin precio COP.\nPedido mínimo: N/D unidades.\n¿Quieres que te gestione la cotización?"
+  },
+  {
+    "timestamp": "2025-10-27T20:50:33.258433",
+    "session_id": "default",
+    "channel": "unknown",
+    "cliente": "cuánto valen las papas",
+    "agente": "Tenemos disponible el producto desconocido en presentación presentación no especificada.\nPrecio estimado: $sin precio COP.\nPedido mínimo: N/D unidades.\n¿Quieres que te gestione la cotización?"
+  },
+  {
+    "timestamp": "2025-10-27T20:50:42.017746",
+    "session_id": "default",
+    "channel": "unknown",
+    "cliente": "cuánto valen las papas",
+    "agente": "Tenemos disponible el producto desconocido en presentación presentación no especificada.\nPrecio estimado: $sin precio COP.\nPedido mínimo: N/D unidades.\n¿Quieres que te gestione la cotización?"
+  },
+  {
+    "timestamp": "2025-10-27T20:51:53.668606",
+    "session_id": "default",
+    "channel": "unknown",
+    "cliente": "cuánto valen las papas",
+    "agente": "Tenemos disponible el producto desconocido en presentación presentación no especificada.\nPrecio estimado: $sin precio COP.\nPedido mínimo: N/D unidades.\n¿Quieres que te gestione la cotización?"
+  },
+  {
+    "timestamp": "2025-10-27T20:53:27.213749",
+    "session_id": "default",
+    "channel": "unknown",
+    "cliente": "cuánto valen las papas",
+    "agente": "Tenemos disponible el producto desconocido en presentación presentación no especificada.\nPrecio estimado: $sin precio COP.\nPedido mínimo: N/D unidades.\n¿Quieres que te gestione la cotización?"
+  },
+  {
+    "timestamp": "2025-10-27T20:54:53.748631",
+    "session_id": "default",
+    "channel": "unknown",
+    "cliente": "cuánto valen las papas",
+    "agente": "Tenemos disponible el producto desconocido en presentación presentación no especificada.\nPrecio estimado: $sin precio COP.\nPedido mínimo: N/D unidades.\n¿Quieres que te gestione la cotización?"
+  },
+  {
+    "timestamp": "2025-10-27T20:57:43.324612",
+    "session_id": "default",
+    "channel": "unknown",
+    "cliente": "cuánto valen las papas",
+    "agente": {
+      "agent_response": "Tenemos disponible el Papa a la francesa 9mm (Congelados).\nPresentación: 5kg.\nPrecio estimado: $23110 COP.\nPedido mínimo: 2 unidades.\nDescuento: 10% a partir de 45 unidades.\nApto para veganos\n¿Quieres que te gestione la cotización?",
+      "should_escalate": false,
+      "summary": {
+        "pedido_o_consulta": "cuánto valen las papas",
+        "accion_del_agente": "Tenemos disponible el Papa a la francesa 9mm (Congelados).\nPresentación: 5kg.\nPrecio estimado: $23110 COP.\nPedido mínimo: 2 unidades.\nDescuento: 10% a partir de 45 unidades.\nApto para veganos\n¿Quieres que te gestione la cotización?",
+        "proximos_pasos": "Enviar cotización o escalar al asesor humano."
+      }
+    }
   }
 ]

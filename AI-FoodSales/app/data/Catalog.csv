@@ -1,4 +1,4 @@
-categoria,sku,nombre,formato,precio_lista_moneda,precio_lista,unidad_minima,descuento_mayorista_volumen,lead_time_dias,regiones_envio,comentarios
+﻿categoria,sku,nombre,formato,precio_lista_moneda,precio_lista,unidad_minima,descuento_mayorista_volumen,lead_time_dias,regiones_envio,comentarios
 Congelados,CO-001,Papa a la francesa 9mm,5kg,COP,23110,2,10% a partir de 45 unidades,6,Nacional,Apto para veganos
 Congelados,CO-002,Arepas rellenas,12 unidades,COP,25893,9,12% a partir de 25 unidades,2,Nacional,Mantener refrigerado
 Congelados,CO-003,Vegetales mixtos,1kg,COP,29465,12,8% a partir de 27 unidades,2,Nacional,Apto para veganos

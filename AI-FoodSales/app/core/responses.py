@@ -1,19 +1,37 @@
-def generate_response(product):
-    if not product:
-        return 'Ese producto no está en el catálogo cargado. ¿Quieres que lo confirme un asesor?'
-    return (f"Tenemos disponible el {product.get('Producto')} en presentación {product.get('Formato')}."
-            f"\nPrecio estimado: ${product.get('Precio')} COP/unidad."
-            f"\nPedido mínimo: {product.get('Minimo')} unidades."
-            "\n¿Quieres que te gestione la cotización?")
+from app.core.summary import build_summary
 
-def faq_response(topic):
-    faq = {
-        'mínimo': 'Congelados: 4 unidades, Lácteos: 5, Bebidas: 12, Mixto: $200.000 COP mínimo.',
-        'pago': 'Transferencia, tarjeta, contraentrega (clientes urbanos), crédito a 30 días con aprobación.',
-        'entrega': '2–3 días en ciudades principales, 4–6 días regionales, 7 días para grandes volúmenes.',
-        'invima': 'Sí, todos los productos tienen certificado INVIMA.'
+def generate_response(product_data: dict, message: str):
+    """
+    Genera la respuesta del agente usando los datos ya detectados del producto.
+    """
+    if not product_data:
+        return {
+            "agent_response": "No pude identificar el producto en tu mensaje. ¿Podrías darme más detalles?",
+            "should_escalate": False,
+            "summary": build_summary(message, "Consulta sin producto detectado.")
+        }
+
+    nombre = product_data.get("nombre", "Producto sin nombre")
+    formato = product_data.get("formato", "presentación no especificada")
+    precio = product_data.get("precio_lista", "sin precio")
+    moneda = product_data.get("precio_lista_moneda", "COP")
+    minimo = product_data.get("unidad_minima", "N/D")
+    categoria = product_data.get("categoria", "general")
+    descuento = product_data.get("descuento_mayorista_volumen", "sin descuento")
+    comentario = product_data.get("comentarios", "")
+
+    agent_response = (
+        f"Tenemos disponible el {nombre} ({categoria}).\n"
+        f"Presentación: {formato}.\n"
+        f"Precio estimado: ${precio} {moneda}.\n"
+        f"Pedido mínimo: {minimo} unidades.\n"
+        f"Descuento: {descuento}.\n"
+        f"{comentario}\n"
+        f"¿Quieres que te gestione la cotización?"
+    )
+
+    return {
+        "agent_response": agent_response,
+        "should_escalate": False,
+        "summary": build_summary(message, agent_response)
     }
-    for key, answer in faq.items():
-        if key in topic:
-            return answer
-    return 'Puedo revisar eso con un asesor si deseas una respuesta detallada.'
