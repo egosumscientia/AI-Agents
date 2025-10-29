@@ -140,12 +140,24 @@ def detect_additional_intents(text: str) -> dict:
 
     # --- Ampliar FAQ ---
     faq_keywords = [
-        "mínimo", "minimos", "compra mínima", "pedido mínimo",  # mínimos de compra
-        "forma de pago", "formas de pago", "pago", "pagos",     # métodos de pago
-        "contraentrega", "efectivo", "tarjeta", "crédito", "débito",   # pago contraentrega
-        "devolución", "devoluciones", "cambio", "cambios", "reembolso", "reembolsos",  # devoluciones/cambios
-        "tiempo de entrega", "entregan", "cuánto se demora la entrega"  # tiempos de entrega
+        # Mínimos de compra
+        "mínimo", "minimos", "compra mínima", "pedido mínimo",
+        
+        # Formas y medios de pago
+        "forma de pago", "formas de pago", "pago", "pagos",
+        "contraentrega", "efectivo", "tarjeta", "crédito", "débito",
+        
+        # Devoluciones y cambios
+        "devolución", "devoluciones", "cambio", "cambios",
+        "reembolso", "reembolsos",
+        
+        # Logística básica en contexto de FAQ
+        "tiempo de entrega", "entregan", "cuánto se demora la entrega",
+        
+        # Disponibilidad de productos
+        "disponibilidad", "stock", "existencias"
     ]
+
 
     if any(k in text for k in faq_keywords):
         intents["faq"] = True
