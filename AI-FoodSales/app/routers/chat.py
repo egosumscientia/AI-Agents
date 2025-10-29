@@ -15,10 +15,42 @@ class ChatMessage(BaseModel):
     channel: str | None = None
 
 
+# --- BLOQUE NUEVO: detección de cortesía ---
+courtesy_keywords = [
+    "hola", "buenos días", "buenas tardes", "buenas noches",
+    "gracias", "muy amable", "te agradezco", "muchas gracias",
+    "listo", "perfecto", "de acuerdo", "vale", "ok", "entendido"
+]
+
+def detect_courtesy_intent(message: str) -> bool:
+    message_lower = message.lower()
+    return any(kw in message_lower for kw in courtesy_keywords)
+
+def generate_courtesy_response(message: str) -> str:
+    lower = message.lower()
+    if any(greet in lower for greet in ["hola", "buenos días", "buenas tardes", "buenas noches"]):
+        return "¡Hola! 😊 ¿En qué puedo ayudarte hoy?"
+    elif any(thanks in lower for thanks in ["gracias", "muy amable", "te agradezco", "muchas gracias"]):
+        return "¡Con gusto! Si necesitas algo más, estoy aquí para ayudarte. 🙌"
+    elif any(close in lower for close in ["listo", "perfecto", "de acuerdo", "vale", "ok", "entendido"]):
+        return "Excelente 👍. Quedo atento por si deseas continuar con tu pedido o consulta."
+    else:
+        return "Estoy aquí si necesitas más información. 😊"
+# --- FIN BLOQUE NUEVO ---
+
+
 @router.post("/")
 async def chat_endpoint(data: ChatMessage):
     try:
         user_input = data.message.lower().strip()
+
+        # 💬 Detección de cortesía antes de cualquier otro análisis
+        if detect_courtesy_intent(user_input):
+            return {
+                "agent_response": generate_courtesy_response(user_input),
+                "should_escalate": False,
+                "summary": {"tipo": "cortesía", "mensaje": user_input}
+            }
 
         # 🔍 Detección de producto
         canonical_name = find_product_from_message(user_input)
@@ -37,7 +69,6 @@ async def chat_endpoint(data: ChatMessage):
         # Priorizar reclamos o certificados sobre logística
         if intents.get("should_escalate"):
             response["should_escalate"] = True
-
 
         # 🚚 Detección de intención logística (solo si no hay reclamo ni descuento)
         logistic_detected, logistic_info = (False, {})
@@ -70,14 +101,12 @@ async def chat_endpoint(data: ChatMessage):
                 }
 
         # 🧩 Caso: producto no encontrado y sin intención logística
-        # Mantener respuesta previa (FAQ o descuento), pero usar fallback solo si no hubo respuesta generada.
         if not product_row and not logistic_detected and not response.get("agent_response"):
             response["agent_response"] = (
                 "No encontré ese producto en nuestro catálogo actual. "
                 "¿Quieres que lo confirme un asesor o te muestro opciones similares?"
             )
             response["should_escalate"] = response.get("should_escalate", False)
-
 
         # 🗣️ Ajustar respuesta según intención
         if intent_level == "high":
