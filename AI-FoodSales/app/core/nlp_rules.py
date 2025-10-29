@@ -39,7 +39,6 @@ def detect_purchase_intent(text: str) -> str:
         return "medium"
     return "low"
 
-
 def detect_logistics_intent(text: str) -> tuple[bool, dict]:
     """
     Detecta si el mensaje del usuario se refiere a temas logísticos
@@ -49,44 +48,41 @@ def detect_logistics_intent(text: str) -> tuple[bool, dict]:
     if not text:
         return False, {}
 
-    import unicodedata
-    import re
+    import unicodedata, re
 
-    # 🔧 Limpieza robusta
+    # Limpieza robusta
     text = text.lower().strip()
     text = unicodedata.normalize("NFKD", text)
     text = "".join(c for c in text if not unicodedata.combining(c))
     text = text.replace("¿", "").replace("?", "").replace("¡", "").replace("!", "")
 
+    # Palabras clave extendidas
     logistics_keywords = [
         r"\b(entrega|entregan|entregar|entregado|entregas)\b",
-        r"\b(envio|envian|enviar|envios)\b",
+        r"\b(envio|envian|enviar|enviarlo|envios)\b",
         r"\b(despacho|despachos|despachan|despachar)\b",
-        r"\b(reparto|domicilio|domicilios|mensajeria)\b",
-        r"\b(fines?\s+de\s+semana|sabados?|domingos?)\b",
+        r"\b(reparto|repartos|domicilio|domicilios|mensajeria)\b",
+        r"\b(cobertura|cubren|alcance)\b",
+        r"\b(horario|hora|horas|mañana|tarde|noche|noches|fines?\s+de\s+semana|sabados?|domingos?)\b"
     ]
 
-    # 🧩 Debug útil
-    print(f"[DEBUG] Texto limpio recibido: {text}")
-    for pat in logistics_keywords:
-        if re.search(pat, text):
-            print(f"[DEBUG] Coincidencia con patrón: {pat}")
-
-    # 🔍 Verifica si hay alguna palabra logística
+    # Verificación rápida
     if not any(re.search(pat, text) for pat in logistics_keywords):
         return False, {}
 
-    # 🧩 Subtipo de intención
+    # Subtipo por prioridad
     if re.search(r"\b(fines?\s+de\s+semana|sabados?|domingos?)\b", text):
         subtype = "weekend"
+    elif re.search(r"\b(horario|hora|horas|mañana|tarde|noche|noches)\b", text):
+        subtype = "time_window"
+    elif re.search(r"\b(cobertura|cubren|alcance|otras?\s+ciudades|fuera|nacional|envian\s+a)\b", text):
+        subtype = "coverage"
     elif re.search(r"\b(cuanto\s+tardan?|tiempos?\s+de\s+entrega|plazo)\b", text):
         subtype = "delivery_time"
-    elif re.search(r"\b(otras?\s+ciudades|fuera|nacional|envian\s+a)\b", text):
-        subtype = "coverage"
     else:
         subtype = "generic"
 
-    # 🏙️ Ciudad (si la menciona)
+    # Detección de ciudad
     city_match = re.search(
         r"\b(en|a)\s+(bogota|medellin|cali|barranquilla|cartagena|bucaramanga|pereira|manizales|cucuta)\b",
         text,
@@ -97,8 +93,6 @@ def detect_logistics_intent(text: str) -> tuple[bool, dict]:
         subtype = "city_delivery"
 
     return True, {"type": subtype, "city": city}
-
-
 
 
 def normalize_input(text: str) -> str | None:

@@ -13,9 +13,24 @@ def generate_response(product_data: dict, message: str):
             "summary": build_summary(message, "Entrada inválida o vacía.")
         }
 
-    msg = message.lower()
+    msg = message.lower() 
     should_escalate = False
     response_text = ""
+
+    # 🚚 Detección avanzada de logística (antes del FAQ)
+    from app.core.nlp_rules import detect_logistics_intent
+
+    logistic_detected, logistic_data = detect_logistics_intent(message)
+    if logistic_detected:
+        from app.core.responses import build_logistics_response
+        subtype = logistic_data.get("type")
+        city = logistic_data.get("city")
+        response_text = build_logistics_response(subtype, city)
+        return {
+            "agent_response": response_text,
+            "should_escalate": should_escalate,
+            "summary": build_summary(message, response_text)
+        }
 
     # 🔒 Escalamiento automático
     if any(word in msg for word in ["certificado", "invima", "contrato", "reclamo", "negociar"]):
@@ -64,25 +79,69 @@ def generate_response(product_data: dict, message: str):
         "summary": build_summary(message, response_text)
     }
 
-# === NUEVO BLOQUE: respuesta logística específica ===
+
 def build_logistics_response(subtype: str, city: str | None = None) -> str:
     """
     Genera una respuesta específica de logística sin interferir con el bloque FAQ.
+    Ampliada para manejar subtipos:
+      - generic
+      - weekend
+      - coverage
+      - city_delivery
+      - time_window
+    Además personaliza por ciudad cuando aplica.
     """
+
+    # --- Base de mensajes por ciudad ---
+    city_delivery_map = {
+        "bogota": "Para Bogotá: entrega en 2–3 días hábiles.",
+        "medellin": "Para Medellín: entrega en 2–3 días hábiles.",
+        "cali": "Para Cali: entrega en 3–4 días hábiles.",
+        "barranquilla": "Para Barranquilla: entrega en 3–5 días hábiles.",
+        "cartagena": "Para Cartagena: entrega en 3–5 días hábiles.",
+        "bucaramanga": "Para Bucaramanga: entrega en 3–5 días hábiles.",
+        "pereira": "Para Pereira: entrega en 3–4 días hábiles.",
+        "manizales": "Para Manizales: entrega en 3–4 días hábiles.",
+        "cucuta": "Para Cúcuta (zona regional): entrega en 4–6 días hábiles.",
+    }
+
+    # --- Mensajes base por subtipo ---
     if subtype == "weekend":
         base_text = (
-            "Realizamos despachos de lunes a viernes. "
-            "Sábados sujetos a cobertura del operador logístico. "
-            "Los tiempos de entrega son de 2 a 3 días hábiles en ciudades principales "
-            "y de 4 a 6 días en regionales. ¿Deseas que te confirme la disponibilidad para tu zona?"
+            "Realizamos entregas de lunes a sábado. "
+            "Los domingos están sujetos a disponibilidad del operador logístico. "
+            "¿Deseas que te confirme si tu zona tiene cobertura en fin de semana?"
         )
-    else:
+
+    elif subtype == "time_window":
+        base_text = (
+            "Nuestros repartos se programan por franjas horarias: "
+            "mañana (8–12), tarde (12–17) y noche (17–20), según cobertura. "
+            "¿Deseas que te confirme la franja disponible para tu zona?"
+        )
+
+    elif subtype == "coverage":
+        base_text = (
+            "Realizamos envíos a nivel nacional. "
+            "Cobertura directa en ciudades principales y vía transportadora para zonas regionales. "
+            "Tiempos de entrega promedio: 2–3 días hábiles en ciudades principales, "
+            "4–6 días en zonas regionales. "
+            "¿Deseas que valide si llegamos a tu municipio?"
+        )
+
+    elif subtype == "city_delivery":
+        city_text = ""
+        if city:
+            key = city.lower()
+            city_text = city_delivery_map.get(key, "")
+        base_text = (
+            (city_text + " ") if city_text else ""
+        ) + "¿Deseas que te confirme el tiempo exacto de entrega en esa zona?"
+
+    else:  # generic y fallback
         base_text = (
             "Los tiempos de entrega son de 2 a 3 días hábiles en ciudades principales "
             "y de 4 a 6 días en regionales. ¿Deseas que te confirme la disponibilidad para tu zona?"
         )
-
-    if city:
-        base_text = f"Para {city}: {base_text}"
 
     return base_text
