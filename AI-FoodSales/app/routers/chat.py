@@ -30,8 +30,20 @@ async def chat_endpoint(data: ChatMessage):
         # 🤖 Generar respuesta principal
         response = generate_response(product_row, user_input)
 
-        # 🚚 Detección de intención logística (delivery_info)
-        logistic_detected, logistic_info = detect_logistics_intent(user_input)
+        # 🧠 Asegurar que detect_additional_intents se evalúe antes de logística
+        from app.core.nlp_rules import detect_additional_intents
+        intents = detect_additional_intents(user_input)
+
+        # Priorizar reclamos o certificados sobre logística
+        if intents.get("should_escalate"):
+            response["should_escalate"] = True
+
+
+        # 🚚 Detección de intención logística (solo si no hay reclamo ni descuento)
+        logistic_detected, logistic_info = (False, {})
+        if not intents.get("should_escalate") and not intents.get("discount_info"):
+            logistic_detected, logistic_info = detect_logistics_intent(user_input)
+
         if logistic_detected and "entrega" not in response["agent_response"]:
             subtype = logistic_info.get("type")
             city = logistic_info.get("city")
@@ -58,12 +70,14 @@ async def chat_endpoint(data: ChatMessage):
                 }
 
         # 🧩 Caso: producto no encontrado y sin intención logística
-        if not product_row and not logistic_detected:
+        # Mantener respuesta previa (FAQ o descuento), pero usar fallback solo si no hubo respuesta generada.
+        if not product_row and not logistic_detected and not response.get("agent_response"):
             response["agent_response"] = (
                 "No encontré ese producto en nuestro catálogo actual. "
                 "¿Quieres que lo confirme un asesor o te muestro opciones similares?"
             )
-            response["should_escalate"] = False
+            response["should_escalate"] = response.get("should_escalate", False)
+
 
         # 🗣️ Ajustar respuesta según intención
         if intent_level == "high":

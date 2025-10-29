@@ -125,3 +125,45 @@ def normalize_input(text: str) -> str | None:
 
     print(f"[normalize_input] Sin coincidencia clara para '{text}'")
     return None
+
+def detect_additional_intents(text: str) -> dict:
+    """
+    Detecta intenciones adicionales: FAQ ampliado, discount_info y escalamiento.
+    Devuelve un dict con flags booleanos.
+    """
+    text = text.lower()
+    intents = {
+        "faq": False,
+        "discount_info": False,
+        "should_escalate": False
+    }
+
+    # --- Ampliar FAQ ---
+    faq_keywords = [
+        "mínimo", "minimos", "compra mínima", "pedido mínimo",  # mínimos de compra
+        "forma de pago", "formas de pago", "pago", "pagos",     # métodos de pago
+        "contraentrega", "efectivo", "tarjeta", "crédito", "débito",   # pago contraentrega
+        "devolución", "devoluciones", "cambio", "cambios", "reembolso", "reembolsos",  # devoluciones/cambios
+        "tiempo de entrega", "entregan", "cuánto se demora la entrega"  # tiempos de entrega
+    ]
+
+    if any(k in text for k in faq_keywords):
+        intents["faq"] = True
+
+    # --- Nueva intención: discount_info ---
+    discount_keywords = [
+        "promocion", "promoción", "oferta", "descuento", "descuentos",
+        "rebaja", "promo", "en oferta"
+    ]
+    if any(k in text for k in discount_keywords):
+        intents["discount_info"] = True
+
+    # --- Escalamiento proactivo ---
+    escalate_keywords = [
+        "reclamo", "problema", "queja", "certificado adicional",
+        "certificado invima", "documento adicional"
+    ]
+    if any(k in text for k in escalate_keywords):
+        intents["should_escalate"] = True
+
+    return intents
