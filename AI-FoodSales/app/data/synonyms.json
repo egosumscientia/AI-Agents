@@ -20,9 +20,6 @@
   "Leche entera": [
     "leche", "leche líquida", "leche normal", "paquete de leche", "litro de leche"
   ],
-  "Kumis": [
-    "yogurt líquido", "kumis", "lácteo fermentado", "yogur bebible", "bebida láctea"
-  ],
   "Cerveza artesanal": [
     "cerveza", "birra", "chela", "cerveza especial", "cerveza de barril", "cerveza artesanal"
   ],
@@ -33,7 +30,10 @@
     "galletas", "galleticas", "galletas de fibra", "snacks integrales", "galletitas"
   ],
   "Yogur natural": [
-    "yogur", "yogurt", "yogurcito", "yogur natural", "yogurt natural"
+    "yogur", "yogurt", "yogurcito", "yogur natural", "yogurt natural", "yogures naturales"
+  ],
+  "Kumis": [
+    "kumis", "lácteo fermentado", "bebida láctea"
   ],
   "Jugo de naranja": [
     "jugo", "juguito", "jugo natural", "zumo de naranja", "jugo de fruta"
@@ -52,5 +52,8 @@
   ],
   "Tostadas de maíz": [
     "tostadas", "nachos", "totopos", "chips de maíz"
+  ],
+  "Vegetales mixtos": [
+    "vegetales", "vegetales mixtos", "verduras", "mezcla de verduras", "mix de vegetales", "mix de verduras"
   ]
 }

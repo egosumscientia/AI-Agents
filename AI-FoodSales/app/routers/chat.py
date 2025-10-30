@@ -62,11 +62,58 @@ async def chat_endpoint(data: ChatMessage):
         canonical_name = find_product_from_message(user_input)
         product_row = get_product_row(canonical_name) if canonical_name else None
 
+        # 🧮 Detección de múltiples productos y cantidades
+        from app.core import nlp_rules, pricing
+
+        items = nlp_rules.extract_products_and_quantities(user_input)
+
+        if items:
+            total_general = 0
+            response_lines = []
+
+            for item in items:
+                prod_name = item["nombre"]
+                qty = item["cantidad"]
+
+                prod_row = get_product_row(prod_name)
+                if not prod_row:
+                    response_lines.append(f"No encontré '{prod_name}' en el catálogo.")
+                    continue
+
+                # Cálculo parcial
+                clean_row = {k.strip().lower(): v for k, v in prod_row.items()}
+                precio = float(clean_row.get("precio_lista", 0))
+                subtotal = precio * qty
+                total_general += subtotal
+                formato = clean_row.get("formato", "")
+
+                response_lines.append(f"{qty} × {prod_name} ({formato}) = ${subtotal:,.0f} COP")
+
+            if total_general > 0:
+                response_lines.append(f"Total: ${total_general:,.0f} COP")
+
+            return {
+                "agent_response": "\n".join(response_lines),
+                "should_escalate": False,
+                "summary": {
+                    "pedido_o_consulta": user_input,
+                    "accion_del_agente": f"Cálculo múltiple para {len(items)} productos",
+                },
+            }
+  
         # 🧠 Detección de intención de compra
         intent_level = detect_purchase_intent(user_input)
 
         # 🤖 Generar respuesta principal
         response = generate_response(product_row, user_input)
+
+        # --- Prioridad de respuestas informativas directas (INVIMA, IVA, etc.) ---
+        if "invima" in user_input or "certificado invima" in user_input:
+            return response
+        
+        # --- Prioridad de respuestas informativas directas (IVA) ---
+        if "iva" in user_input or "incluye iva" in user_input or "precio con iva" in user_input:
+            return response
 
         # ✅ Preservar resultado de escalamiento si el mensaje es reclamo o sarcasmo
         from app.core.escalation import should_escalate

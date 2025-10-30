@@ -64,7 +64,76 @@ def generate_response(product_data: dict, message: str):
     should_escalate_flag = False
     response_text = ""
 
+    # --- EXCEPCIÓN: consultas sobre IVA ---
+    import re
+    if re.search(r"\biva\b", msg) or "incluye iva" in msg or "precio con iva" in msg:
+        response_text = (
+            "Todos nuestros precios incluyen IVA, salvo que se indique lo contrario en la descripción del producto."
+        )
+        return {
+            "agent_response": response_text,
+            "should_escalate": False,
+            "summary": build_summary(message, response_text),
+        }
+
+    # --- EXCEPCIÓN: consultas sobre INVIMA ---
+    if "invima" in msg or "certificado invima" in msg:
+        response_text = (
+            "Sí, todos nuestros productos cuentan con registro sanitario INVIMA vigente "
+            "y cumplen con las normas de calidad establecidas por las autoridades."
+        )
+        return {
+            "agent_response": response_text,
+            "should_escalate": False,
+            "summary": build_summary(message, response_text),
+        }
+    
+    # --- EXCEPCIÓN: tiempos de entrega por ciudad o región ---
+    if "entrega" in msg or "llegada" in msg:
+        import re
+
+        # Detecta ciudad tras "en", "a" o "para", incluso con frases intermedias
+        match = re.search(
+            r"(?:en|a|para)\s+(?:la\s+entrega\s+a\s+)?([A-ZÁÉÍÓÚÑa-záéíóúñ]{3,}(?:\s+[A-ZÁÉÍÓÚÑa-záéíóúñ]+)*)",
+            message,
+            re.UNICODE | re.IGNORECASE
+        )
+
+        ciudad = ""
+        if match:
+            posible = match.group(1).strip()
+            # Evita falsos positivos como "entrega", "pedido", etc.
+            if not re.search(r"\b(entrega|pedido|compra|envío|orden|la|el|los|las|para|en|a)\b", posible, re.IGNORECASE):
+                ciudad = " ".join([p.capitalize() for p in posible.split()])
+
+        # Si no detectó ciudad pero la frase tiene 'para' seguido de un nombre, capturarlo igualmente
+        if not ciudad:
+            match_alt = re.search(
+                r"para\s+([A-ZÁÉÍÓÚÑa-záéíóúñ]{3,}(?:\s+[A-ZÁÉÍÓÚÑa-záéíóúñ]+)*)",
+                message,
+                re.UNICODE | re.IGNORECASE
+            )
+            if match_alt:
+                posible = match_alt.group(1).strip()
+                if not re.search(r"\b(entrega|pedido|compra|envío|orden|la|el|los|las|para|en|a)\b", posible, re.IGNORECASE):
+                    ciudad = " ".join([p.capitalize() for p in posible.split()])
+
+        if ciudad:
+            response_text = f"El tiempo estimado de entrega en {ciudad} es de 2 a 5 días hábiles, según disponibilidad logística."
+        else:
+            response_text = "Los tiempos de entrega son de 2 a 5 días hábiles en ciudades principales y de 4 a 6 días en zonas regionales."
+
+        return {
+            "agent_response": response_text,
+            "should_escalate": False,
+            "summary": build_summary(message, response_text),
+        }
+
+
+
+
     result = should_escalate(msg)
+
 
     # 💬 1️⃣ PRIORIDAD: sarcasmo o reclamo ANTES de cortesía
     if isinstance(result, dict):
