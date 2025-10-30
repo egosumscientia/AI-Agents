@@ -193,7 +193,7 @@ def detect_additional_intents(text: str) -> dict:
         "confusión", "pedido incorrecto", "producto equivocado",
         "pedido incompleto", "demora", "retraso", "no ha llegado", "todavía no llega",
         "repartidor", "cobrado", "cobro incorrecto", "precio distinto",
-        "olvidó", "olvido" "esperando", "falta", "dañado", "incompleto otra vez"
+        "olvidó", "olvido", "esperando", "falta", "dañado", "cambio", "incompleto otra vez"
     ]
 
     if any(k in text for k in escalate_keywords):

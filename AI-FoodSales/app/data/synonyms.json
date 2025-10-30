@@ -1,59 +1,232 @@
 {
   "Papa a la francesa 9mm": [
-    "papas", "papa", "papas fritas", "papa frita", "papitas",
-    "papas congeladas", "french fries", "papas a la francesa",
-    "papitas a la francesa", "peritas"
+    "papas",
+    "papa",
+    "papas fritas",
+    "papa frita",
+    "papitas",
+    "papas congeladas",
+    "french fries",
+    "papas a la francesa",
+    "papitas a la francesa",
+    "peritas"
   ],
   "Arepas rellenas": [
-    "arepas", "arepa", "arepitas", "arepa rellena", "arepas rellenas"
-  ],
-  "Queso mozzarella": [
-    "mozzarella", "mozarrella", "queso mozzarella", "queso mozarela",
-    "quesito mozzarella", "queso pizza"
-  ],
-  "Agua mineral": [
-    "agua", "agüita", "agua mineral", "agua con gas", "botella de agua", "agua sin gas"
-  ],
-  "Croquetas de pollo": [
-    "nuggets", "croquetas", "croquetas de pollo", "bolitas de pollo", "nuggets de pollo"
-  ],
-  "Leche entera": [
-    "leche", "leche líquida", "leche normal", "paquete de leche", "litro de leche"
-  ],
-  "Cerveza artesanal": [
-    "cerveza", "birra", "chela", "cerveza especial", "cerveza de barril", "cerveza artesanal"
-  ],
-  "Mantequilla sin sal": [
-    "mantequilla", "manteca", "mantequilla natural", "mantequilla sin sal"
-  ],
-  "Galletas integrales": [
-    "galletas", "galleticas", "galletas de fibra", "snacks integrales", "galletitas"
-  ],
-  "Yogur natural": [
-    "yogur", "yogurt", "yogurcito", "yogur natural", "yogurt natural", "yogures naturales"
-  ],
-  "Kumis": [
-    "kumis", "lácteo fermentado", "bebida láctea"
-  ],
-  "Jugo de naranja": [
-    "jugo", "juguito", "jugo natural", "zumo de naranja", "jugo de fruta"
-  ],
-  "Té verde": [
-    "té", "té natural", "infusión verde", "te verde", "te natural"
-  ],
-  "Mix de frutos secos": [
-    "frutos secos", "nueces", "almendras", "mezcla de frutos", "snack de frutos secos"
-  ],
-  "Chips de plátano": [
-    "platanitos", "plátano frito", "snacks de plátano", "chips de plátano"
-  ],
-  "Barra de granola": [
-    "granola", "barrita", "snack de granola", "barra energética"
-  ],
-  "Tostadas de maíz": [
-    "tostadas", "nachos", "totopos", "chips de maíz"
+    "arepas",
+    "arepa",
+    "arepitas",
+    "arepa rellena",
+    "arepas rellenas"
   ],
   "Vegetales mixtos": [
-    "vegetales", "vegetales mixtos", "verduras", "mezcla de verduras", "mix de vegetales", "mix de verduras"
-  ]
+    "vegetales",
+    "vegetales mixtos",
+    "verduras",
+    "mezcla de verduras",
+    "mix de vegetales",
+    "mix de verduras"
+  ],
+  "Filete de pescado": [
+    "Filete de pescado"
+  ],
+  "Croquetas de pollo": [
+    "nuggets",
+    "croquetas",
+    "croquetas de pollo",
+    "bolitas de pollo",
+    "nuggets de pollo"
+  ],
+  "Queso mozzarella": [
+    "mozzarella",
+    "mozarrella",
+    "queso mozzarella",
+    "queso mozarela",
+    "quesito mozzarella",
+    "queso pizza"
+  ],
+  "Leche entera": [
+    "leche",
+    "leche líquida",
+    "leche normal",
+    "paquete de leche",
+    "litro de leche"
+  ],
+  "Yogur natural": [
+    "yogur",
+    "yogurt",
+    "yogurcito",
+    "yogur natural",
+    "yogurt natural",
+    "yogures naturales"
+  ],
+  "Mantequilla sin sal": [
+    "mantequilla",
+    "manteca",
+    "mantequilla natural",
+    "mantequilla sin sal"
+  ],
+  "Kumis": [
+    "kumis",
+    "lácteo fermentado",
+    "bebida láctea"
+  ],
+  "Jugo de naranja": [
+    "jugo",
+    "juguito",
+    "jugo natural",
+    "zumo de naranja",
+    "jugo de fruta"
+  ],
+  "Agua mineral": [
+    "agua",
+    "agüita",
+    "agua mineral",
+    "agua con gas",
+    "botella de agua",
+    "agua sin gas"
+  ],
+  "Gaseosa cola": [
+    "Gaseosa cola"
+  ],
+  "Té verde": [
+    "té",
+    "té natural",
+    "infusión verde",
+    "te verde",
+    "te natural"
+  ],
+  "Cerveza artesanal": [
+    "cerveza",
+    "birra",
+    "chela",
+    "cerveza especial",
+    "cerveza de barril",
+    "cerveza artesanal"
+  ],
+  "Mix de frutos secos": [
+    "frutos secos",
+    "nueces",
+    "almendras",
+    "mezcla de frutos",
+    "snack de frutos secos"
+  ],
+  "Chips de plátano": [
+    "platanitos",
+    "plátano frito",
+    "snacks de plátano",
+    "chips de plátano"
+  ],
+  "Galletas integrales": [
+    "galletas",
+    "galleticas",
+    "galletas de fibra",
+    "snacks integrales",
+    "galletitas"
+  ],
+  "Barra de granola": [
+    "granola",
+    "barrita",
+    "snack de granola",
+    "barra energética"
+  ],
+  "Tostadas de maíz": [
+    "tostadas",
+    "nachos",
+    "totopos",
+    "chips de maíz"
+  ],
+  "Pechuga de pollo": [
+    "Pechuga de pollo"
+  ],
+  "Carne molida": [
+    "Carne molida"
+  ],
+  "Chuleta de cerdo": [
+    "Chuleta de cerdo"
+  ],
+  "Costilla de res": [
+    "Costilla de res"
+  ],
+  "Salchicha premium": [
+    "Salchicha premium"
+  ],
+  "Pan integral tajado": [
+    "Pan integral tajado"
+  ],
+  "Croissant": [
+    "Croissant"
+  ],
+  "Torta de vainilla": [
+    "Torta de vainilla"
+  ],
+  "Baguette": [
+    "Baguette"
+  ],
+  "Pan de bono": [
+    "Pan de bono"
+  ],
+  "Detergente en polvo": [
+    "Detergente en polvo"
+  ],
+  "Jabón líquido": [
+    "Jabón líquido"
+  ],
+  "Shampoo": [
+    "Shampoo"
+  ],
+  "Suavizante de ropa": [
+    "Suavizante de ropa"
+  ],
+  "Limpiavidrios": [
+    "Limpiavidrios"
+  ],
+  "Arroz premium": [
+    "Arroz premium"
+  ],
+  "Fríjol rojo": [
+    "Fríjol rojo"
+  ],
+  "Lenteja": [
+    "Lenteja"
+  ],
+  "Garbanzo": [
+    "Garbanzo"
+  ],
+  "Maíz trillado": [
+    "Maíz trillado"
+  ],
+  "Aceite de girasol": [
+    "Aceite de girasol"
+  ],
+  "Aceite de soya": [
+    "Aceite de soya"
+  ],
+  "Aceite de oliva": [
+    "Aceite de oliva"
+  ],
+  "Aceite de maíz": [
+    "Aceite de maíz"
+  ],
+  "Aceite de coco": [
+    "Aceite de coco"
+  ],
+  "Papel higiénico": [
+    "Papel higiénico"
+  ],
+  "Toallas de cocina": [
+    "Toallas de cocina"
+  ],
+  "Servilletas": [
+    "Servilletas"
+  ],
+  "Detergente lavavajillas": [
+    "Detergente lavavajillas"
+  ],
+  "Bolsa de basura": [
+    "Bolsa de basura"
+  ],
+  "Limonada natural": ["limonada", "limonadas naturales", "limonadita"],
+  "Hamburguesa de res": ["hamburguesa", "burger", "hamburguesa de res", "hamburguesa doble"],
+  "Gaseosa": ["gaseosa", "refresco", "bebida", "coca cola", "soda", "pepsi"],
+  "Empanadas": ["empanadas", "empanaditas", "empanada"]
 }
