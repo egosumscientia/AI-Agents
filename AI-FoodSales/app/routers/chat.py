@@ -44,13 +44,19 @@ async def chat_endpoint(data: ChatMessage):
     try:
         user_input = data.message.lower().strip()
 
-        # 💬 Detección de cortesía antes de cualquier otro análisis
+        # 💬 Detección de cortesía (solo si no hay frustración ni sarcasmo)
         if detect_courtesy_intent(user_input):
-            return {
-                "agent_response": generate_courtesy_response(user_input),
-                "should_escalate": False,
-                "summary": {"tipo": "cortesía", "mensaje": user_input}
-            }
+            from app.core.escalation import should_escalate
+            result = should_escalate(user_input)
+            if result.get("summary", {}).get("scores", {}).get("sarcasm", 0) < 0.8:
+                return {
+                    "agent_response": generate_courtesy_response(user_input),
+                    "should_escalate": False,
+                    "summary": {"tipo": "cortesía", "mensaje": user_input}
+                }
+            else:
+                # Si hay sarcasmo o frustración, se sigue con el flujo normal
+                pass
 
         # 🔍 Detección de producto
         canonical_name = find_product_from_message(user_input)
@@ -61,6 +67,13 @@ async def chat_endpoint(data: ChatMessage):
 
         # 🤖 Generar respuesta principal
         response = generate_response(product_row, user_input)
+
+        # ✅ Preservar resultado de escalamiento si el mensaje es reclamo o sarcasmo
+        from app.core.escalation import should_escalate
+        escalation_result = should_escalate(user_input)
+        if escalation_result.get("should_escalate"):
+            print(">>> ESCALAMIENTO PRESERVADO DESDE CHAT")
+            return escalation_result
 
         # 🧠 Asegurar que detect_additional_intents se evalúe antes de logística
         from app.core.nlp_rules import detect_additional_intents

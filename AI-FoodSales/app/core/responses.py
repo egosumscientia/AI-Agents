@@ -9,6 +9,7 @@ Descripción:
   - 100 % compatible con formato JSON y manejo de multiproducto
 """
 
+from unittest import result
 from app.core.summary import build_summary
 from app.core.escalation import should_escalate
 
@@ -63,20 +64,21 @@ def generate_response(product_data: dict, message: str):
     should_escalate_flag = False
     response_text = ""
 
-    # 💬 1️⃣ Priorizar cortesía natural (saludos, agradecimientos, cierres)
+    result = should_escalate(msg)
+
+    # 💬 1️⃣ PRIORIDAD: sarcasmo o reclamo ANTES de cortesía
+    if isinstance(result, dict):
+        sarcasm_score = result["summary"]["scores"]["sarcasm"]
+        complaint_score = result["summary"]["scores"]["complaint"]
+        if sarcasm_score >= 0.8 or complaint_score >= 1.2:
+            result["should_escalate"] = True
+            print(">>> RESPUESTA ESCALADA (sarcasmo/reclamo detectado)")
+            return result
+
+    # 💬 2️⃣ Cortesía natural (saludos, agradecimientos, cierres)
     if detect_courtesy_intent(msg):
         return generate_courtesy_response(msg)
 
-    # 🚨 2️⃣ Reclamos y errores (escalamiento)
-    if should_escalate(msg):
-        return {
-            "agent_response": (
-                "Entendido, escalaré tu caso para que un asesor te contacte y revise tu solicitud. "
-                "Un representante verificará el pedido o la facturación en breve."
-            ),
-            "should_escalate": True,
-            "summary": build_summary(message, "Caso escalado por reclamo logístico o financiero."),
-        }
 
     # 💔 3️⃣ Bloque empático: producto dañado, mal olor, vencido
     if any(term in msg for term in ["dañado", "mal olor", "defectuoso", "vencido", "en mal estado"]):
