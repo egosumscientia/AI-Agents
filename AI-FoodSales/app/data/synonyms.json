@@ -27,10 +27,15 @@
     "mix de verduras"
   ],
   "Filete de pescado": [
-    "Filete de pescado"
+    "Filete de pescado",
+    "Filetes de pescado",
+    "Filete",
+    "Pescado",
+    "Pescados"
   ],
   "Croquetas de pollo": [
     "nuggets",
+    "croqueta",
     "croquetas",
     "croquetas de pollo",
     "bolitas de pollo",
@@ -38,18 +43,29 @@
   ],
   "Queso mozzarella": [
     "mozzarella",
-    "mozarrella",
+    "mozarrellas",
     "queso mozzarella",
     "queso mozarela",
     "quesito mozzarella",
-    "queso pizza"
+    "queso pizza",
+    "quesos mozzarella",
+    "quesos mozarela",
+    "quesitos mozzarella",
+    "quesos pizza"
   ],
   "Leche entera": [
     "leche",
     "leche líquida",
     "leche normal",
     "paquete de leche",
-    "litro de leche"
+    "litro de leche",
+    "leches",
+    "leches líquidas",
+    "leches normales",
+    "paquetes de leche",
+    "litros de leche",
+    "Bolsa de leche",
+    "Bolsas de leche"
   ],
   "Yogur natural": [
     "yogur",
@@ -63,19 +79,30 @@
     "mantequilla",
     "manteca",
     "mantequilla natural",
-    "mantequilla sin sal"
+    "mantequilla sin sal",
+    "mantequillas",
+    "mantecas",
+    "mantequillas naturales",
+    "mantequillas sin sal"
   ],
   "Kumis": [
     "kumis",
     "lácteo fermentado",
-    "bebida láctea"
+    "bebida láctea",
+    "lácteos fermentados",
+    "bebidas lácteas"
   ],
   "Jugo de naranja": [
     "jugo",
     "juguito",
     "jugo natural",
     "zumo de naranja",
-    "jugo de fruta"
+    "jugo de fruta",
+    "jugos",
+    "juguitos",
+    "jugos naturales",
+    "zumos de naranja",
+    "jugos de fruta"
   ],
   "Agua mineral": [
     "agua",
@@ -83,17 +110,29 @@
     "agua mineral",
     "agua con gas",
     "botella de agua",
-    "agua sin gas"
+    "agua sin gas",
+    "aguas",
+    "agüitas",
+    "aguas minerales",
+    "aguas con gas",
+    "botellas de agua",
+    "aguas sin gas"
   ],
   "Gaseosa cola": [
-    "Gaseosa cola"
+    "Gaseosa cola",
+    "Gaseosas",
+    "Colas",
+    "Cola",
+    "Gaseosas cola"
   ],
   "Té verde": [
     "té",
     "té natural",
     "infusión verde",
     "te verde",
-    "te natural"
+    "te natural",
+    "té naturales",
+    "infusiones verdes"
   ],
   "Cerveza artesanal": [
     "cerveza",
@@ -101,7 +140,13 @@
     "chela",
     "cerveza especial",
     "cerveza de barril",
-    "cerveza artesanal"
+    "cerveza artesanal",
+    "cervezas",
+    "birras",
+    "chelas",
+    "cervezas especiales",
+    "cervezas de barril",
+    "cervezas artesanales"
   ],
   "Mix de frutos secos": [
     "frutos secos",
@@ -136,97 +181,144 @@
     "chips de maíz"
   ],
   "Pechuga de pollo": [
-    "Pechuga de pollo"
+    "Pechuga de pollo",
+    "Pechuga",
+    "Pechugas",
+    "Pechugas de pollo"
   ],
   "Carne molida": [
     "Carne molida"
   ],
   "Chuleta de cerdo": [
-    "Chuleta de cerdo"
+    "Chuleta de cerdo",
+    "Chuleta",
+    "Chuletas de cerdo",
+    "Chuletas"
   ],
   "Costilla de res": [
-    "Costilla de res"
+    "Costilla de res",
+    "Costilla",
+    "Costillas de res",
+    "Costillas"
   ],
   "Salchicha premium": [
-    "Salchicha premium"
+    "Salchicha premium",
+    "Salchicha",
+    "salchichas",
+    "salchichas premium"
   ],
   "Pan integral tajado": [
-    "Pan integral tajado"
+    "Pan integral tajado",
+    "Panes integrales"
   ],
   "Croissant": [
-    "Croissant"
+    "Croissant",
+    "Croissants"
   ],
   "Torta de vainilla": [
-    "Torta de vainilla"
+    "Torta de vainilla",
+    "Torta",
+    "Tortas",
+    "Tortas de vainilla"
   ],
   "Baguette": [
-    "Baguette"
+    "Baguette",
+    "Pan Baguette",
+    "Panes Baguette"
   ],
   "Pan de bono": [
-    "Pan de bono"
+    "Pan de bono",
+    "Pan",
+    "Panes"
   ],
   "Detergente en polvo": [
-    "Detergente en polvo"
+    "Detergente en polvo",
+    "Detergentes en polvo",
+    "Detergentes"
   ],
   "Jabón líquido": [
-    "Jabón líquido"
+    "Jabón líquido",
+    "Jabones líquidos",
+    "Jabones"
   ],
   "Shampoo": [
-    "Shampoo"
+    "Shampoo",
+    "Shampoos"
   ],
   "Suavizante de ropa": [
-    "Suavizante de ropa"
+    "Suavizante de ropa",
+    "Suavizantes de ropa",
+    "Suavizante",
+    "Suavizantes"
   ],
   "Limpiavidrios": [
     "Limpiavidrios"
   ],
   "Arroz premium": [
-    "Arroz premium"
+    "Arroz premium",
+    "Arroz",
+    "Arroces premium",
+    "Arroces"
   ],
   "Fríjol rojo": [
-    "Fríjol rojo"
+    "Fríjol rojo",
+    "Fríjoles rojos",
+    "Fríjoles"
   ],
   "Lenteja": [
-    "Lenteja"
+    "Lenteja",
+    "Lentejas"
   ],
   "Garbanzo": [
-    "Garbanzo"
+    "Garbanzo",
+    "Garbanzos"
   ],
   "Maíz trillado": [
-    "Maíz trillado"
+    "Maíz trillado",
+    "Maíces trillados",
+    "Maíces"
   ],
   "Aceite de girasol": [
-    "Aceite de girasol"
+    "Aceite de girasol",
+    "Aceites de girasol"
   ],
   "Aceite de soya": [
-    "Aceite de soya"
+    "Aceite de soya",
+    "Aceites de soya"
   ],
   "Aceite de oliva": [
-    "Aceite de oliva"
+    "Aceite de oliva",
+    "Aceites de oliva"
   ],
   "Aceite de maíz": [
-    "Aceite de maíz"
+    "Aceite de maíz",
+    "Aceites de maíz"
   ],
   "Aceite de coco": [
-    "Aceite de coco"
+    "Aceite de coco",
+    "Aceites de coco"
   ],
   "Papel higiénico": [
-    "Papel higiénico"
+    "Papel higiénico",
+    "Papeles higiénicos"
   ],
   "Toallas de cocina": [
-    "Toallas de cocina"
+    "Toallas de cocina",
+    "Toallas",
+    "Toalla de cocina",
+    "Toalla"
   ],
   "Servilletas": [
     "Servilletas"
   ],
-  "Detergente lavavajillas": [
-    "Detergente lavavajillas"
+  "Crema dental": [
+    "Crema dental",
+    "Pasta dental",
+    "Cremas dentales",
+    "Pastas dentales"
   ],
   "Bolsa de basura": [
+    "Bolsa de basura",
     "Bolsa de basura"
-  ],
-  "Limonada natural": ["limonada", "limonadas naturales", "limonadita"],
-  "Hamburguesa de res": ["hamburguesa", "burger", "hamburguesa de res", "hamburguesa doble"],
-  "Gaseosa": ["gaseosa", "refresco", "bebida", "coca cola", "soda", "pepsi"],
-  "Empanadas": ["empanadas", "empanaditas", "empanada"]
+  ]
 }
