@@ -201,33 +201,48 @@ def generate_response(product_data: dict, message: str):
             "should_escalate": should_escalate_flag,
             "summary": build_summary(message, response_text),
         }
+    # 📦 6️⃣ Productos (soporte multiproducto con cálculo de precios)
+    print(f"[DEBUG] product_data recibido en responses: {product_data}", flush=True)
 
-    # 📦 6️⃣ Productos (soporte multiproducto)
+    # 📦 Productos (soporte multiproducto con cálculo de precios)
     if product_data:
-        productos = []
+        from app.core.pricing import calculate_total
+        response_lines = []
+        total_general = 0
+
+        # Soporte multiproducto
         if isinstance(product_data, list):
             for p in product_data:
-                nombre = p.get("nombre", "Producto sin nombre")
-                categoria = p.get("categoria", "general")
-                productos.append(f"- {nombre} ({categoria})")
-        else:
-            nombre = product_data.get("nombre", "Producto sin nombre")
-            categoria = product_data.get("categoria", "general")
-            productos.append(f"- {nombre} ({categoria})")
+                cantidad = int(p.get("cantidad", 1))
+                print(f"[RESPONSES] Invocando calculate_total() para {p.get('nombre')}", flush=True)
+                print(f"[TRACE] p keys: {list(p.keys())}", flush=True)
 
-        joined = "\n".join(productos)
-        response_text = (
-            f"Tenemos disponibles los siguientes productos:\n{joined}\n"
-            "¿Deseas que te envíe la cotización detallada?"
-        )
+                # calculate_total retorna string, pero podemos extraer valor numérico
+                line_text = calculate_total(p, cantidad)
+                response_lines.append(line_text)
+
+                # Captura numérica del total por producto (solo números)
+                import re
+                m = re.search(r"Total: \$([\d,.]+)", line_text)
+                if m:
+                    total_general += float(m.group(1).replace(",", ""))
+
+        else:
+            cantidad = int(product_data.get("cantidad", 1))
+            print(f"[RESPONSES] Invocando calculate_total() para {product_data.get('nombre')}", flush=True)
+            line_text = calculate_total(product_data, cantidad)
+            response_lines.append(line_text)
+            import re
+            m = re.search(r"Total: \$([\d,.]+)", line_text)
+            if m:
+                total_general += float(m.group(1).replace(",", ""))
+
+        if total_general > 0:
+            response_lines.append(f"Total general: ${total_general:,.0f} COP")
+
+        response_text = "\n".join(response_lines)
     else:
         response_text = "No pude identificar el producto en tu mensaje. ¿Podrías darme más detalles?"
-
-    return {
-        "agent_response": response_text,
-        "should_escalate": should_escalate_flag,
-        "summary": build_summary(message, response_text),
-    }
 
 
 def build_logistics_response(subtype: str, city: str | None = None) -> str:

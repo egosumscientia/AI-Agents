@@ -67,40 +67,44 @@ async def chat_endpoint(data: ChatMessage):
 
         items = nlp_rules.extract_products_and_quantities(user_input)
 
-        if items:
-            total_general = 0
-            response_lines = []
+        response_lines = []  # ✅ mover fuera del bucle
+        total_general = 0    # ✅ para acumular totales
 
-            for item in items:
-                prod_name = item["nombre"]
-                qty = item["cantidad"]
+        for item in items:
+            prod_name = item["nombre"]
+            qty = item["cantidad"]
 
-                prod_row = get_product_row(prod_name)
-                if not prod_row:
-                    response_lines.append(f"No encontré '{prod_name}' en el catálogo.")
-                    continue
+            prod_row = get_product_row(prod_name)
+            if not prod_row:
+                response_lines.append(f"No encontré '{prod_name}' en el catálogo.")
+                continue
 
-                # Cálculo parcial
-                clean_row = {k.strip().lower(): v for k, v in prod_row.items()}
-                precio = float(clean_row.get("precio_lista", 0))
-                subtotal = precio * qty
-                total_general += subtotal
-                formato = clean_row.get("formato", "")
+            # ✅ Cálculo con descuento por volumen
+            from app.core.pricing import calculate_total
+            resultado = calculate_total(prod_row, qty)
+            response_lines.append(resultado)
 
-                response_lines.append(f"{qty} × {prod_name} ({formato}) = ${subtotal:,.0f} COP")
+            # ✅ extraer monto final del texto para acumular total (opcional)
+            import re
+            match = re.search(r"Total: \$([\d,]+)", resultado)
+            if match:
+                monto = int(match.group(1).replace(",", ""))
+                total_general += monto
 
-            if total_general > 0:
-                response_lines.append(f"Total: ${total_general:,.0f} COP")
+        # ✅ total general (solo si hay productos válidos)
+        if total_general > 0:
+            response_lines.append(f"🟩 Total general: ${total_general:,.0f} COP")
 
-            return {
-                "agent_response": "\n".join(response_lines),
-                "should_escalate": False,
-                "summary": {
-                    "pedido_o_consulta": user_input,
-                    "accion_del_agente": f"Cálculo múltiple para {len(items)} productos",
-                },
-            }
-  
+        # 🔸 Respuesta final consolidada
+        return {
+            "agent_response": "\n".join(response_lines),
+            "should_escalate": False,
+            "summary": {
+                "pedido_o_consulta": user_input,
+                "accion_del_agente": f"Cálculo múltiple para {len(items)} productos",
+            },
+        }
+          
         # 🧠 Detección de intención de compra
         intent_level = detect_purchase_intent(user_input)
 
