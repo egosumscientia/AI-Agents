@@ -67,44 +67,53 @@ async def chat_endpoint(data: ChatMessage):
 
         items = nlp_rules.extract_products_and_quantities(user_input)
 
-        response_lines = []  # ✅ mover fuera del bucle
-        total_general = 0    # ✅ para acumular totales
+        if items:
+            response_lines = []
+            total_general = 0
 
-        for item in items:
-            prod_name = item["nombre"]
-            qty = item["cantidad"]
+            for item in items:
+                prod_name = item["nombre"]
+                qty = item["cantidad"]
 
-            prod_row = get_product_row(prod_name)
-            if not prod_row:
-                response_lines.append(f"No encontré '{prod_name}' en el catálogo.")
-                continue
+                prod_row = get_product_row(prod_name)
+                if not prod_row:
+                    response_lines.append(f"No encontré '{prod_name}' en el catálogo.")
+                    continue
 
-            # ✅ Cálculo con descuento por volumen
-            from app.core.pricing import calculate_total
-            resultado = calculate_total(prod_row, qty)
-            response_lines.append(resultado)
+                from app.core.pricing import calculate_total
+                resultado = calculate_total(prod_row, qty)
+                response_lines.append(resultado)
 
-            # ✅ extraer monto final del texto para acumular total (opcional)
-            import re
-            match = re.search(r"Total: \$([\d,]+)", resultado)
-            if match:
-                monto = int(match.group(1).replace(",", ""))
-                total_general += monto
+                import re
+                match = re.search(r"Total: \$([\d,]+)", resultado)
+                if match:
+                    monto = int(match.group(1).replace(",", ""))
+                    total_general += monto
 
-        # ✅ total general (solo si hay productos válidos)
-        if total_general > 0:
-            response_lines.append(f"🟩 Total general: ${total_general:,.0f} COP")
+            # ✅ total general (solo si hay productos válidos)
+            if total_general > 0:
+                response_lines.append(f"🟩 Total general: ${total_general:,.0f} COP")
 
-        # 🔸 Respuesta final consolidada
-        return {
-            "agent_response": "\n".join(response_lines),
-            "should_escalate": False,
-            "summary": {
-                "pedido_o_consulta": user_input,
-                "accion_del_agente": f"Cálculo múltiple para {len(items)} productos",
-            },
-        }
-          
+            # 🧠 Detección de reclamos o sarcasmo antes de responder
+            from app.core.escalation import should_escalate
+            escalation_result = should_escalate(user_input) or {}
+            
+            if escalation_result.get("should_escalate"):
+                print(">>> ESCALAMIENTO PRESERVADO DESDE CHAT")
+                return escalation_result
+
+            # 🔸 Respuesta final consolidada (solo si no hay reclamo)
+            return {
+                "agent_response": "\n".join(response_lines),
+                "should_escalate": False,
+                "summary": {
+                    "pedido_o_consulta": user_input,
+                    "accion_del_agente": f"Cálculo múltiple para {len(items)} productos",
+                },
+            }
+
+        # 👇 Si no hay productos, continúa flujo general (sarcasmo, reclamos, logística, etc.)
+
         # 🧠 Detección de intención de compra
         intent_level = detect_purchase_intent(user_input)
 
@@ -115,7 +124,6 @@ async def chat_endpoint(data: ChatMessage):
         if "invima" in user_input or "certificado invima" in user_input:
             return response
         
-        # --- Prioridad de respuestas informativas directas (IVA) ---
         if "iva" in user_input or "incluye iva" in user_input or "precio con iva" in user_input:
             return response
 
@@ -144,11 +152,9 @@ async def chat_endpoint(data: ChatMessage):
             city = logistic_info.get("city")
             logistics_text = build_logistics_response(subtype, city)
 
-            # Si hay producto → combinar ambas respuestas
             if product_row:
                 response["agent_response"] += f"\n\n{logistics_text}"
             else:
-                # Solo logística (sin producto)
                 return {
                     "agent_response": logistics_text,
                     "should_escalate": False,
@@ -163,6 +169,9 @@ async def chat_endpoint(data: ChatMessage):
                         },
                     },
                 }
+            
+        # ✅ failsafe añadido aquí
+        response = response or {}
 
         # 🧩 Caso: producto no encontrado y sin intención logística
         if not product_row and not logistic_detected and not response.get("agent_response"):

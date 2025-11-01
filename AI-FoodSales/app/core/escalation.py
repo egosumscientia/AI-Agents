@@ -38,6 +38,9 @@ COMPLAINT_ROOTS = {
     "no entiendo","no corresponde","dañado","inservible","roto","podrido","vencido",
     "quebrado","incompleto","faltantes","menos productos","menos de lo solicitado",
     "precio diferente","precio distinto","factura diferente",
+    # Reclamos y problemas generales
+    "reclamo","problema","queja","error","equivocado","mal","malo","defectuoso",
+    "inaceptable","esperando","espera","demasiado","tardo","pedido","entrega","demorado",
     # Pedidos y entregas con error
     "pedido incorrecto","producto equivocado","me llego mal","no ha llegado","no llego",
     "no me llego","no me ha llegado","vino incompleto","llego incompleto",
@@ -55,8 +58,12 @@ COMPLAINT_ROOTS = {
     "valor diferente","costo equivocado","precio errado","precio equivocado",
     "precio incorrecto","sobreprecio","sobre cobro","me cobraron de mas",
     # Raíces genéricas abreviadas
-    "cobr","reembols","devolu","tard","retras","demor","no lleg","falt","incomplet",
-    "equivocad","cancel","estaf","fraud","frio","malis","pesim","horrible","terrible"
+    "cobr", "reembols", "devolu", "tard", "retras", "demor", "no lleg", "falt", "incomplet",
+    "frustración", "frustracion", "frustr", "equivocad", "cancel", "estaf", "fraud", "frio", "malis", 
+    "pesim", "horri", "terrible","molesto", "indig", "incompet", "neglig",
+    #Otros con ironía
+    "eficiencia", "eficiente", "respuesta", "atencion", "atención",
+    "servicio", "entrega", "soporte"
 }
 
 FRUSTRATION_MARKS = {"😒","🙃","😤","😠","🤦","🤬","💢"}
@@ -266,6 +273,11 @@ def score_complaint(text:str, s:Scores):
         s.complaint+=WEIGHTS["emoji"]; s.cues["complaint"].append("emoji")
     for r in map_english_to_spanish_roots(text):
         s.complaint+=WEIGHTS["eng"]; s.cues["complaint"].append("en→"+r)
+        # 🔹 Extensión ligera para reclamos comunes no cubiertos por raíces
+    if re.search(r"(inaceptable|esperando|demasiado|tardo|demorado|pedido)", text):
+        s.complaint += 1.0
+        s.cues["complaint"].append("reclamo_extra")
+    
 
 def score_sarcasm(text: str, s: Scores):
     # sarcasmo positivo + negativo (base original)
@@ -424,9 +436,28 @@ def should_escalate(message:str)->Dict:
             "(cobro erróneo, producto faltante, demora, calidad)?"
         )
     
-    # agrega esto dentro de should_escalate(), justo antes del return:
     print(">>> DEBUG SCORES:", s.sarcasm, s.complaint, s.politeness, s.cues)
 
+    # 🧩 Failsafe: asegurar estructura de retorno completa
+    if not isinstance(s.cues, dict):
+        s.cues = {"complaint": [], "sarcasm": [], "politeness": []}
+
+    if not summary or not isinstance(summary, dict):
+        summary = {
+            "version": "v1.4.1",
+            "scores": {
+                "complaint": round(s.complaint, 2),
+                "sarcasm": round(s.sarcasm, 2),
+                "politeness": round(s.politeness, 2),
+                "threshold": THRESHOLDS.get("complaint", 1.3)
+            },
+            "cues": s.cues,
+            "priority_rule": "reclamo prevalece sobre cortesía"
+        }
+
+    if response is None:
+        response = "No se detectó una intención clara, pero puedo derivar tu caso a un asesor humano."
 
     return {"agent_response": response, "should_escalate": escalate, "summary": summary}
+
 

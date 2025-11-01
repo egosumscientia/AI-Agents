@@ -253,7 +253,8 @@ def extract_products_and_quantities(message: str) -> list[dict]:
         variant_group = "(?:" + "|".join(patterns) + ")"
 
         # detectar cantidades antes o después del producto
-        pattern = rf"(?:\b(\d+)\s+(?:de\s+)?{variant_group}(?:\s+\w+){{0,2}}|\b{variant_group}(?:\s+\w+){{0,2}}\s*(?:de\s+)?(\d+)\b)"
+        #pattern = rf"(?:\b(\d+)\s+(?:de\s+)?{variant_group}(?:\s+\w+){{0,2}}|\b{variant_group}(?:\s+\w+){{0,2}}\s*(?:de\s+)?(\d+)\b)"
+        pattern = rf"(?:\b(\d+)\s*(?:unidades?|paquetes?|cajas?|bolsas?|litros?|kilos?|x)?\s*(?:de\s+)?{variant_group}(?:\s+\w+){{0,2}}|\b{variant_group}(?:\s+\w+){{0,2}}\s*(?:de\s+)?(\d+)\b)"
         matches = re.finditer(pattern, txt)
 
         for m in matches:
